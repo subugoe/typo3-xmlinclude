@@ -1,0 +1,22 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+
+	<ROOT>
+		<type>array</type>
+		<el>
+
+			<settings.baseURL>
+				<TCEforms>
+					<label>LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.baseURL</label>
+					<config>
+						<type>input</type>
+						<size>255</size>
+					</config>
+				</TCEforms>
+			</settings.baseURL>
+
+		</el>
+	</ROOT>
+</T3DataStructure>
