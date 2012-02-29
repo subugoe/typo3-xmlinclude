@@ -1,4 +1,8 @@
 plugin.tx_xmlinclude.settings {
 	baseURL= 
-	XSL = []
+	XSL {
+		1 = EXT:xmlinclude/Resources/Private/XSL/rewrite-urls.xsl
+	}
+	rewriteOnClass = rewrite-on
+	rewriteOffClass = rewrite-off
 }
