@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="DSpace" name="Generator" />
+<link type="text/css" rel="stylesheet" media="print" href="/goescholar/themes/goescholar/lib/print.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/goescholar/themes/goescholar/lib/style.css" />
+<link href="/goescholar/themes/goescholar/lib/thickbox.css" type="text/css" rel="stylesheet" />
+<link href="/goescholar/themes/goescholar/lib/jquery.autocomplete.css" type="text/css" rel="stylesheet" />
+<link type="image/x-icon" rel="shortcut icon" href="/goescholar/themes/goescholar/images/favicon.ico" />
+<script type="text/javascript">
+
+				//Clear default text of emty text areas on focus
+				function tFocus(element)
+				{
+					if (element.value == ' '){element.value='';}
+				}
+				//Clear default text of emty text areas on submit
+				function tSubmit(form)
+				{
+					var defaultedElements = document.getElementsByTagName("textarea");
+					for (var i=0; i != defaultedElements.length; i++){
+						if (defaultedElements[i].value == ' '){
+							defaultedElements[i].value='';}
+					}
+				}
+				//Disable pressing 'enter' key to submit a form (otherwise pressing 'enter' causes a submission to start over)
+				function disableEnterKey(e)
+				{
+					var key;
+
+					if(window.event)
+						key = window.event.keyCode;     //Internet Explorer
+					else
+						key = e.which;     //Firefox and Netscape
+
+					if(key == 13)  //if "Enter" pressed, then disable!
+						return false;
+					else
+						return true;
+				}
+				var arrowLeftSrc = '/goescholar/themes/goescholar/images/menu-rounded-arrow-left.png';
+				var arrowDownSrc = '/goescholar/themes/goescholar/images/menu-rounded-arrow-down.png';
+				var arrowOnlyLeftSrc = '/goescholar/themes/goescholar/images/arrowonlyleft.png';
+				var arrowOnlyDownSrc = '/goescholar/themes/goescholar/images/arrowonlydown.png';
+				
+
+				function matchHeights(){
+				//Just a placeholder function
+				}
+
+
+			</script>
+<script type="text/javascript" src="/goescholar/themes/goescholar/js/jquery.js" />
+<!--
+				[if IE]><script type="text/javascript" src="/goescholar/themes/goescholar/js/excanvas.compiled.js"></script><![endif]
+			-->
+<script type="text/javascript">
+
+			$(document).ready(function(){
+
+				if ($("#login").length != 0) {
+					$("#login").click(function(event){
+						event.preventDefault();
+						$("#login-help").toggle();
+					});
+
+				}
+
+		        function formatItem(row) {
+		                return row[0] + " (<strong>id: " + row[1] + "</strong>)";
+		        }
+		        function formatResult(row) {
+		                return row[0];
+		        }
+
+
+				if ($('#aspect_statistics_StatisticsTransformer_div_stats h3').length != 0) {
+					$('#aspect_statistics_StatisticsTransformer_div_tablewrapper .ds-table').graphTable({position:'before'});
+				}
+
+			$("#aspect_submission_StepTransformer_field_dc_relation_euproject").autocomplete(["AFFECTS", "ANTHOS", "BaCell-SysMO", "BENWOOD", "CARE-MI", "CATCH-C", "CD14", "CONSENT", "DASISH", "DIVERSITY", "DRIVER", "Ecropolis", "EHRI", "ENERGYPOPLAR", "Ethicsweb", "EURO-PADnet", "EUTrigTreat", "Exoplanet", "Search", "FIRST", "FLABEL",  "GARNICS", "GIAVAP", "HI-FRETECH", "IATS", "ICON", "IFOX", "IMPACT", "IntellAct", "LipidomicNet", "LowInputBreeds", "Multiflow", "MULTISWARD", "MUSTANG", "MUSTERMAN", "NANOMAP", "NANOWIRING", "NEUGENE", "NUE-CROPS", "OpenAIRE", "OpenAIREplus", "OptALI", "P3AGI", "PANACEA", "PARAFLUO", "PARSE.Insight", "PHM", "Ethics", "PIGWISE", "Preparing", "DARIAH",  "Priority", "REDD-ALERT", "SCIP", "SHAMAN", "SMART", "SOTERIA", "SUSTAINPINE", "SyMBaD", "TISS.EU", "TRANSFOP", "TRANSPAT", "VirtualLife", "WAVELENGTH", "STANDARDS", "WoodSens", "XPERIENCE"], {
+                        width: 200,
+                max: 40,
+                highlight: false,
+                multiple: true,
+                multipleSeparator: " ",
+                scroll: true,
+                scrollHeight: 300
+
+                });
+
+		$("#aspect_submission_StepTransformer_field_dc_relation_eusponsor").autocomplete(["201549", "201936", "202204", "202272", "211400", "211583", "211905", "211917", "212147", "214919-2", "215064", "216064", "216736", "217817", "218477", "218816", "222623-2", "222645", "222887", "222925", "223758", "226310", "227286", "227321", "230253", "230602", "230739", "232359", "235120", "238608", "241526", "242038", "244643", "244983", "246102", "246647", "246686", "247947", "257928", "258713", "261727", "261873", "262549", "263506", "265073", "265601", "266401", "269959", "270273", "275542", "279347", "282900-1", "283595", "283646", "284432", "284461", "289782", "033R055A", "PIIF-GA-2009-234866", "WW-2009-1-6"], {
+                width: 200,
+                max: 40,
+                highlight: false,
+                multiple: true,
+                multipleSeparator: " ",
+                scroll: true,
+                scrollHeight: 300
+
+                });
+
+		$("#aspect_submission_StepTransformer_field_dc_relation_ispartofseries").autocomplete(journals, {
+			width: 500,
+			matchContains: true,
+			minChars: 2
+
+		});
+
+	});
+			</script>
+<title>Seite nicht gefunden</title>
+</head>
+<body>
+<div id="ds-main">
+<div id="ds-header">
+<a href="/goescholar/">
+<span id="ds-header-logo"> </span>
+</a>
+<img id="ds-instance" src="/goescholar/themes/goescholar/images/ginkgo.gif" alt="Ginkgo" />
+<h1 class="pagetitle">Seite nicht gefunden</h1>
+<h2 class="static-pagetitle">GoeScholar</h2>
+<div id="trail">
+<div id="home">
+<a href="/goescholar/">Goescholar</a> &gt; </div>
+<div id="breadcrumbs"> </div>
+</div>
+<div id="ds-user-box">
+<p>
+<a href="/goescholar/login">Einloggen</a>
+</p>
+</div>
+</div>
+<div id="ds-body">
+<h1 class="ds-div-head">Seite nicht gefunden</h1>
+<div id="aspect_general_PageNotFoundTransformer_div_page-not-found" class="ds-static-div primary">
+<p class="ds-paragraph">Die Seite, die Sie angefordert haben, konnte nicht gefunden werden.</p>
+<p class="ds-paragraph">
+<a href="/goescholar" class="">Zur Startseite</a>
+</p>
+</div>
+</div>
+<div id="ds-options">
+<h3 class="ds-option-set-head" id="ds-search-option-head">Suche</h3>
+<div class="ds-option-set" id="ds-search-option">
+<form method="post" id="ds-search-form" action="/goescholar/search">
+<fieldset>
+<input type="text" class="ds-text-field " name="query" />
+<input value="Los" type="submit" name="submit" class="ds-button-field " onclick="&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;var radio = document.getElementById(&quot;ds-search-form-scope-container&quot;);&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;if (radio != undefined &amp;&amp; radio.checked)&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;{&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;var form = document.getElementById(&quot;ds-search-form&quot;);&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;form.action=&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&quot;/goescholar/handle/&quot; + radio.value + &quot;/search&quot; ; &#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;}&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;" />
+</fieldset>
+</form>
+<a href="/goescholar/advanced-search">Erweiterte Suche</a>
+</div>
+<h3 class="ds-option-set-head">Browsen</h3>
+<div id="aspect_artifactbrowser_Navigation_list_browse" class="ds-option-set">
+<ul class="ds-options-list">
+<li>
+<h4 class="ds-sublist-head">Gesamter Bestand</h4>
+<ul class="ds-simple-list">
+<li>
+<a href="/goescholar/community-list" class="">» Fakultäten &amp; Zentren</a>
+</li>
+<li>
+<a href="/goescholar/browse?type=dateissued" class="">» Erscheinungsdatum</a>
+</li>
+<li>
+<a href="/goescholar/browse?type=author" class="">» Autoren</a>
+</li>
+<li>
+<a href="/goescholar/browse?type=title" class="">» Titeln</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 class="ds-option-set-head">Mein GoeScholar</h3>
+<div id="aspect_artifactbrowser_Navigation_list_account" class="ds-option-set">
+<ul class="ds-options-list">
+<li>
+<a href="/goescholar/upload-service" class="">» Hochlade-Service</a>
+</li>
+<li>
+<a href="/goescholar/submissions" class="">» Dokument(e) anmelden</a>
+</li>
+<li>
+<a href="/goescholar/checklist">» Checkliste</a>
+</li>
+</ul>
+</div>
+<h3 class="ds-option-set-head">Infos &amp; Hilfe</h3>
+<div class="ds-option-set-head" id="static_Navigation_list">
+<ul class="ds-options-list">
+<li>» <a href="/goescholar/help">Hilfe &amp; FAQ</a>
+</li>
+<li>» <a href="/goescholar/user-rights">
+							
+							Nutzungslizenz
+						</a>
+</li>
+<li>» <a href="/goescholar/rights">Deposit Lizenz</a>
+</li>
+</ul>
+</div>
+<hr />
+<h3 class="ds-option-set-head">Login: <a id="login" href="http://goedoc.uni-goettingen.de/goescholar/help#login" class="green-bold">   ? </a>
+</h3>
+<div class="ds-option-set" id="ds-login-option">
+<form method="post" id="ds-login-form" action="https://goedoc.uni-goettingen.de//goescholar/ldap-login">
+<fieldset>
+<label for="aspect_eperson_LDAPLogin_field_username" class="login-form-label">GWDG-Benutzername:</label>
+<span class="green" id="login-help">GWDG-Benutzername ist der Namensteil <b>uname</b> von ihrer E-Mail-Adresse uname@gwdg.de oder uname@med.uni-goettingen.de<br />
+<br />Das Passwort ist Ihr Passwort bei der GWDG.
+							</span>
+<br />
+<input value="" type="text" name="username" class="ds-text-field" id="aspect_eperson_LDAPLogin_field_username" />
+<label for="aspect_eperson_LDAPLogin_field_ldap_password" class="login-form-label">GWDG-Passwort:</label>
+<input type="password" value="" name="ldap_password" class="ds-password-field" id="aspect_eperson_LDAPLogin_field_ldap_password" />
+<input value="Los" type="submit" name="submit" class="ds-button-field " />
+</fieldset>
+</form>
+</div>
+</div>
+
+<div id="ds-footer">
+		<p>
+			Entwicklung und Betrieb durch <a href="http://www.sub.uni-goettingen.de">Niedersächsische Staats- und Universitätsbibliothek Göttingen</a>. 
+		</p>
+	<div id="ds-footer-links">
+<a href="/goescholar/contact">Kontakt</a> | <a href="/goescholar/feedback">Feedback</a> | <a href="/goescholar/impressum">Impressum</a> | <a href="/goescholar/guides">Leitlinien</a>
+</div>
+<div id="show" />
+<a href="/goescholar/htmlmap" />
+</div>
+<script type="text/javascript">
+			var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.gwdg.de/" : "http://piwik.gwdg.de/");
+			document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+<script type="text/javascript">
+			try {
+				var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 72);
+				piwikTracker.trackPageView(); 
+				piwikTracker.enableLinkTracking();
+			} catch( err ) {} 
+		</script>
+<noscript>
+<p>
+<img alt="" style="border:0" src="http://piwik.gwdg.de/piwik.php?idsite=72" />
+</p>
+</noscript>
+</div>
+</body>
+</html>
