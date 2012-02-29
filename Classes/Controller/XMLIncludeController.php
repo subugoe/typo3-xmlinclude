@@ -46,19 +46,6 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * @return void
 	 */
 	public function initializeAction () {
-		foreach ( $this->settings as $key => $value ) {
-			// Transfer settings to conf
-			$this->conf[$key] = $value;
-
-			if (strpos($key, 'Path') !== False) {
-				// Let TYPO3 try to process path settings as a path, so we can
-				// use EXT: in the paths.
-				$processedPath = $GLOBALS['TSFE']->tmpl->getFileName($value);
-				if ($processedPath) {
-					$this->conf[$key] = $processedPath;
-				}
-			}
-		}
 	}
 
 
@@ -69,36 +56,75 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * @return void
 	 */
 	public function indexAction () {
-		debugster($this->conf);
 		$this->addResourcesToHead();
-		$XMLString = $this->XMLString($this->conf);
-		debugster($XMLString);
-		$this->view->assign('xml', $XMLString);
+		$XML = $this->XML();
+		if ($XML) {
+			$this->view->assign('xml', $XML->saveXML());
+		}
 	}
+
 
 
 	/**
 	 *
 	 * @param arrray $conf
-	 * @return string
+	 * @return DOMDocument
 	 */
-	protected function XMLString ($conf) {
-		// Retrieve XML
-		$URL = $conf['baseURL'] . $conf['URLPath'];
-		$XMLString = file_get_contents($URL);
-		debugster($XMLString);
-		$XML = DOMDocument::loadXML($XMLString);
-		if ($XML !== False) {
-			// Transform XML
-			debugster($XML);
+	protected function XML () {
+		// Retrieve XML.
+		$arguments = $this->request->getArguments();
+		$URL = $this->settings['baseURL'] . $arguments['URL'];
+		debugster($URL);
+		$XMLString = t3lib_div::getUrl($URL);
+		$XML = new DOMDocument();
+		$XML->loadXML($XMLString);
+
+		if ($XML !== FALSE) {
+			// Apply array of XSLTs.
+			foreach ($this->settings['XSL'] as $XSLPath) {
+				// Let TYPO3 try to process path settings as a path so we can use EXT: in the paths.
+				$processedPath = PATH_site . $GLOBALS['TSFE']->tmpl->getFileName($XSLPath);
+				if ($processedPath) {
+					$XSLPath = $processedPath;
+				}
+
+				// Load XSL.
+				$XSLString = t3lib_div::getUrl($XSLPath);
+				$XSL = new DOMDocument();
+				if ($XSL->loadXML($XSLString)) {
+					$xsltproc = new XSLTProcessor();
+					$xsltproc->importStylesheet($XSL);
+
+					// Add parameters to XSL:
+					// * everything in $this->settings
+					// * URL of current page as pageURL (to be used for URL building)
+					$parameters = $this->settings;
+					$pageURLComponents = explode('?', $this->request->getRequestUri(), 2);
+					$parameters['pageURL'] = $pageURLComponents[0];
+					$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
+					$parameters['hostName'] = $hostName;
+					$parameters['XSL'] ='';
+					debugster($parameters);
+					$xsltproc->setParameter('', $parameters);
+
+					// Transform the document.
+					$XML = $xsltproc->transformToDoc($XML);
+				}
+				else {
+					t3lib_div::devLog('Failed to load XSL ' . $XSLPath . ', stopping.', 'xmlinclude', 3);
+					break;
+				}
+				if (!$XML) {
+					t3lib_div::devLog('Failed to apply XSL ' . $XSLPath . ', stopping.', 'xmlinclude', 3);
+					break;
+				}
+			}
 		}
 		else {
-
+			t3lib_div::devLog('Failed to load XML from ' . $URL . '.', 'xmlinclude', 3);
 		}
 
-		
-
-		return $XML->saveXML();
+		return $XML;
 	}
 
 
