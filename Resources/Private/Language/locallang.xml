@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the xmlinclude extension</description>
+	</meta>
+
+
+	<data type="array">
+
+		<languageKey index="en" type="array">
+			<label index="Error">Error</label>
+			<label index="Failed to load XML from">Failed to load XML from</label>
+			<label index="Failed to load XSL">Failed to load XSL</label>
+			<label index="Failed to apply XSL">Failed to apply XSL</label>
+		</languageKey>
+
+
+		<languageKey index="de" type="array">
+			<label index="Error">Fehler</label>
+			<label index="Failed to load XML from">XML konnte nicht geladen werden:</label>
+			<label index="Failed to load XSL">XSL konnte nicht geladen werden:</label>
+			<label index="Failed to apply XSL">XSL konnte nicht angewandt werden:</label>
+		</languageKey>
+
+	</data>
+</T3locallang>

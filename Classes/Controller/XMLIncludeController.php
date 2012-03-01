@@ -41,101 +41,152 @@
 class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
+	 * Instance variable providing an array for error strings.
+	 * @var Array
+	 */
+	private $errors;
+
+	/**
+	 * @param string $newError
+	 */
+	protected function addError ($message, $fileInfo = Null) {
+		$this->errors[] = Array('message' => $message, 'fileInfo' => $fileInfo);
+	}
+
+
+
+	/**
 	 * Initialiser
 	 *
 	 * @return void
 	 */
 	public function initializeAction () {
+		$this->errors = Array();
 	}
 
 
 
 	/**
-	 * Index:
+	 * Index
 	 *
 	 * @return void
 	 */
 	public function indexAction () {
-		$this->addResourcesToHead();
 		$XML = $this->XML();
-		if ($XML) {
-			$this->view->assign('xml', $XML->saveXML());
-		}
+		if ($XML) {	$this->view->assign('xml', $XML->saveXML()); }
+		$this->view->assign('conf', $this->settings);
+		$this->view->assign('errors', $this->errors);
 	}
 
 
 
 	/**
+	 * Loads and transforms XML according to settings.
+	 * Returns the resulting XML document.
 	 *
-	 * @param arrray $conf
 	 * @return DOMDocument
 	 */
 	protected function XML () {
-		// Retrieve XML.
-		$arguments = $this->request->getArguments();
-		$URL = $this->settings['baseURL'] . $arguments['URL'];
-		debugster($URL);
-		$XMLString = t3lib_div::getUrl($URL);
+		// Retrieve and load XML.
+		$XMLString = t3lib_div::getUrl($this->remoteURL());
 		$XML = new DOMDocument();
 		$XML->loadXML($XMLString);
-
 		if ($XML !== FALSE) {
 			// Apply array of XSLTs.
+			ksort($this->settings['XSL']);
 			foreach ($this->settings['XSL'] as $XSLPath) {
-				// Let TYPO3 try to process path settings as a path so we can use EXT: in the paths.
-				$processedPath = PATH_site . $GLOBALS['TSFE']->tmpl->getFileName($XSLPath);
-				if ($processedPath) {
-					$XSLPath = $processedPath;
-				}
-
-				// Load XSL.
-				$XSLString = t3lib_div::getUrl($XSLPath);
-				$XSL = new DOMDocument();
-				if ($XSL->loadXML($XSLString)) {
-					$xsltproc = new XSLTProcessor();
-					$xsltproc->importStylesheet($XSL);
-
-					// Add parameters to XSL:
-					// * everything in $this->settings
-					// * URL of current page as pageURL (to be used for URL building)
-					$parameters = $this->settings;
-					$pageURLComponents = explode('?', $this->request->getRequestUri(), 2);
-					$parameters['pageURL'] = $pageURLComponents[0];
-					$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
-					$parameters['hostName'] = $hostName;
-					$parameters['XSL'] ='';
-					debugster($parameters);
-					$xsltproc->setParameter('', $parameters);
-
-					// Transform the document.
-					$XML = $xsltproc->transformToDoc($XML);
-				}
-				else {
-					t3lib_div::devLog('Failed to load XSL ' . $XSLPath . ', stopping.', 'xmlinclude', 3);
-					break;
-				}
+				$XML = $this->transformXMLWithXSLAtPath($XML, $XSLPath);
 				if (!$XML) {
-					t3lib_div::devLog('Failed to apply XSL ' . $XSLPath . ', stopping.', 'xmlinclude', 3);
+					$XML = Null;
 					break;
 				}
 			}
 		}
 		else {
-			t3lib_div::devLog('Failed to load XML from ' . $URL . '.', 'xmlinclude', 3);
+			$this->addError('Failed to load XML from', $this->remoteURL());
 		}
 
 		return $XML;
 	}
 
+	
+	
+	/**
+	 * Builds the remote URL to load the XML from. Uses:
+	 * * the baseURL set in the FlexForm
+	 * * the URL argument
+	 * * the parameters TypoScript variable
+	 * 
+	 * @return string 
+	 */
+	private function remoteURL() {
+		// Build the remote request URL from the base URL and the URL parameter.
+		$arguments = $this->request->getArguments();
+		$remoteURL = $this->settings['baseURL'] . $arguments['URL'];
+		
+		// Take parameters from the target URL and add those from the parameters TypoScript variable.
+		$URLParameters = Null;
+		$URLComponents = explode('?', $remoteURL, 2);
+		parse_str($URLComponents[1], $URLParameters);
+		$URLParameters = array_merge($URLParameters, $this->settings['URLParameters']);
+		
+		// Reassemble the URL with its new set of parameters.
+		$newParameterString = http_build_query($URLParameters);
+		if ($newParameterString) {
+			$remoteURL = $URLComponents[0] . '?' . $newParameterString;
+		}
+
+		return $remoteURL;
+	}
+
 
 
 	/**
-	 * Helper: Inserts headers into page.
+	 * Loads XSL from the given path and applies it to the given passed XML.
+	 * Returns the trasnformed XML document.
 	 *
-	 * @return void
+	 * @param string $XSLPath
+	 * @param DOMDocument $XML
+	 * @return DOMDocument|Null transformed XML
 	 */
-	protected function addResourcesToHead () {
-	}
+	private function transformXMLWithXSLAtPath ($XML, $XSLPath) {
+		// Let TYPO3 analyse  the path settings to resolve potential 'EXT:'.
+		$processedPath = $GLOBALS['TSFE']->tmpl->getFileName($XSLPath);
+		if ($processedPath) {
+			$XSLPath = PATH_site . $processedPath;
+		}
 
+		// Load XSL.
+		$XSLString = t3lib_div::getUrl($XSLPath);
+		$XSL = new DOMDocument();
+		if ($XSL->loadXML($XSLString)) {
+			$xsltproc = new XSLTProcessor();
+			$xsltproc->importStylesheet($XSL);
+
+			// Add parameters to XSL:
+			// * everything in $this->settings
+			// * URL of current page as pageURL (to be used for URL building)
+			// * host name of target host
+			$parameters = $this->settings;
+			$pageURLComponents = explode('?', $this->request->getRequestUri(), 2);
+			$parameters['pageURL'] = $pageURLComponents[0];
+			$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
+			$parameters['hostName'] = $hostName;
+			$xsltproc->setParameter('', $parameters);
+
+			// Transform the document.
+			$XML = $xsltproc->transformToDoc($XML);
+			if (!$XML) {
+				$this->addError('Failed to apply XSL', $XSLPath);
+			}
+		}
+		else {
+			$this->addError('Failed to load XSL', $XSLPath);
+			$XML = Null;
+		}
+
+		return $XML;
+	}
 }
+
 ?>

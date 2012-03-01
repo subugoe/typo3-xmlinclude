@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+	xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 	<xsl:output method="xml"/>
 
@@ -24,7 +26,7 @@
 			* relative links OR http(s) links whose host name is the same as our target site’s
 		* and those marked with the $rewriteOnClass class, regardless of other conditions
 	-->
-	<xsl:template match="a/@href">
+	<xsl:template match="xhtml:a/@href">
 		<!-- Link is relative if does not contain :// -->
 		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
 		<!-- Link is a http link if it does not begin with http:// or https:// -->
@@ -49,18 +51,9 @@
 					<xsl:value-of select="."/>
 				</xsl:otherwise>
 			</xsl:choose>
-		</xsl:attribute>
 
-		<xsl:attribute name="title">
-			isRelativeLink:<xsl:value-of select="$isRelativeLink"/>
-			isHTTPLink:<xsl:value-of select="$isHTTPLink"/>
-			HTTPHostName:<xsl:value-of select="$HTTPHostName"/>
-			not(contains(../@class, $rewriteOffClass)):<xsl:value-of select="not(contains(../@class, $rewriteOffClass))"/>
-			isRelativeLink:<xsl:value-of select="$isRelativeLink"/>
 		</xsl:attribute>
-
 	</xsl:template>
-
 
 
 

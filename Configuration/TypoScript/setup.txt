@@ -1,8 +1,22 @@
 plugin.tx_xmlinclude.settings {
-	baseURL= 
+	# Array of XSL files used to process the downloaded XML.
 	XSL {
-		1 = EXT:xmlinclude/Resources/Private/XSL/rewrite-urls.xsl
+		50 = EXT:xmlinclude/Resources/Private/XSL/rewrite-urls.xsl
 	}
+
+	# Empty arrays of additional URL parameters, JavaScript and CSS files to include.
+	# Exactly this notation is required to created empty arrays in TypoScript.
+	# Removing the line break results in inclusion of the following statements into the array.
+	URLParameters {
+	}
+
+	headJavaScript {
+	}
+
+	headCSS {
+	}
+
+	# Default CSS classes used to mark links that should/should not be rewritten.
 	rewriteOnClass = rewrite-on
 	rewriteOffClass = rewrite-off
 }
