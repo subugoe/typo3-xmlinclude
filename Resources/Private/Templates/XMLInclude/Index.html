@@ -1,3 +1,22 @@
+{namespace fed=Tx_Fed_ViewHelpers}
+
+<f:for each="{conf.headCSS}" as="URL">
+	<fed:pageRenderer.addCssFile file="{URL}"/>
+</f:for>
+<f:for each="{conf.headJavaScript}" as="URL">
+	<fed:pageRenderer.addJsFile file="{URL}"/>
+	{URL}
+</f:for>
+
+
 <div class="xmlinclude">
+	<f:for each="{errors}" as="error">
+		<h4 class="error"><f:translate key="Error"></f:translate></h4>
+		<p class="error">
+			<f:translate key="{error.message}">{errorMessage}</f:translate>
+			<f:if condition="{error.fileInfo}"> »{error.fileInfo}«</f:if>
+		</p>
+	</f:for>
+
 	{xml->f:format.raw()}
 </div>
