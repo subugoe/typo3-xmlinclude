@@ -73,7 +73,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 */
 	public function indexAction () {
 		$XML = $this->XML();
-		if ($XML) {	$this->view->assign('xml', $XML->saveXML()); }
+		if ($XML) {	$this->view->assign('xml', $XML->saveXML($XML->firstChild)); }
 		$this->view->assign('conf', $this->settings);
 		$this->view->assign('errors', $this->errors);
 	}
