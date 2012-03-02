@@ -12,6 +12,7 @@
 		<languageKey index="en" type="array">
 			<label index="Error">Error</label>
 			<label index="Failed to load XML from">Failed to load XML from</label>
+			<label index="Failed to parse XML from">Failed to parse XML from</label>
 			<label index="Failed to load XSL">Failed to load XSL</label>
 			<label index="Failed to apply XSL">Failed to apply XSL</label>
 		</languageKey>
@@ -20,6 +21,7 @@
 		<languageKey index="de" type="array">
 			<label index="Error">Fehler</label>
 			<label index="Failed to load XML from">XML konnte nicht geladen werden:</label>
+			<label index="Failed to parse XML from">XML konnte nicht gelesen werden:</label>
 			<label index="Failed to load XSL">XSL konnte nicht geladen werden:</label>
 			<label index="Failed to apply XSL">XSL konnte nicht angewandt werden:</label>
 		</languageKey>

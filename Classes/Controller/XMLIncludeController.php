@@ -88,18 +88,23 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 */
 	protected function XML () {
 		// Retrieve and load XML.
+		xdebug_break();
 		$XMLString = t3lib_div::getUrl($this->remoteURL());
-		$XML = new DOMDocument();
-		$XML->loadXML($XMLString);
-		if ($XML !== FALSE) {
-			// Apply array of XSLTs.
-			ksort($this->settings['XSL']);
-			foreach ($this->settings['XSL'] as $XSLPath) {
-				$XML = $this->transformXMLWithXSLAtPath($XML, $XSLPath);
-				if (!$XML) {
-					$XML = Null;
-					break;
+		if ($XMLString) {
+			$XML = new DOMDocument();
+			if ($XML->loadXML($XMLString) === TRUE) {
+				// Apply array of XSLTs.
+				ksort($this->settings['XSL']);
+				foreach ($this->settings['XSL'] as $XSLPath) {
+					$XML = $this->transformXMLWithXSLAtPath($XML, $XSLPath);
+					if (!$XML) {
+						$XML = Null;
+						break;
+					}
 				}
+			}
+			else {
+				$this->addError('Failed to parse XML from', $this->remoteURL());
 			}
 		}
 		else {
