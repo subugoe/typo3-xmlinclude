@@ -148,7 +148,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		if ($newParameterString) {
 			$remoteURL = $URLComponents[0] . '?' . $newParameterString;
 		}
-debugster($remoteURL);
+
 		return $remoteURL;
 	}
 
