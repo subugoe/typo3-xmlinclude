@@ -55,8 +55,6 @@ foreach ($plugInFlexForms as $plugInFlexFormInfo) {
 	t3lib_extMgm::addPiFlexFormValue($fullPlugInName, $flexFormPath);
 }
 
-include_once(t3lib_extMgm::extPath($_EXTKEY) . 'Classes/Service/Flexform.php');
-
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'xmlinclude Settings');
 
 ?>
