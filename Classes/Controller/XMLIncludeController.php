@@ -134,7 +134,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$remoteURL .= $arguments['URL'];
 		}
 		else {
-			$remoteURL .= $settings['startURL'];
+			$remoteURL .= $this->settings['startURL'];
 		}
 
 			// Take parameters from the target URL and add those from the parameters TypoScript variable.
