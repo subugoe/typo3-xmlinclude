@@ -17,6 +17,17 @@
 				</TCEforms>
 			</settings.baseURL>
 
+			<settings.startURL>
+				<TCEforms>
+					<label>LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.startURL</label>
+					<config>
+						<type>input</type>
+						<size>255</size>
+					</config>
+				</TCEforms>
+			</settings.startURL>
+
+
 		</el>
 	</ROOT>
 </T3DataStructure>

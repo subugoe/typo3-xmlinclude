@@ -10,11 +10,13 @@
 	<data type="array">
 
 		<languageKey index="en" type="array">
-			<label index="settings.baseURL">start URL</label>
+			<label index="settings.baseURL">Base URL (for relative links)</label>
+			<label index="settings.startURL">Start URL (the start point for browsing)</label>
 		</languageKey>
 
 		<languageKey index="de" type="array">
-			<label index="settings.baseURL">Start-URL</label>
+			<label index="settings.baseURL">Base-URL (Referenzpunkt für relative Links)</label>
+			<label index="settings.startURL">Start-URL (Startpunkt für den Seitenaufruf)</label>
 		</languageKey>
 
 	</data>
