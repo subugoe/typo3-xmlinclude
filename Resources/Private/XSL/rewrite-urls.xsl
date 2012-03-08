@@ -6,6 +6,7 @@
 	<xsl:output method="xml"/>
 
 	<xsl:param name="pageURL"/>
+	<xsl:param name="baseURL"/>
 	<xsl:param name="hostName"/>
 	<xsl:param name="rewriteOnClass"/>
 	<xsl:param name="rewriteOffClass"/>
@@ -52,6 +53,24 @@
 				</xsl:otherwise>
 			</xsl:choose>
 
+		</xsl:attribute>
+	</xsl:template>
+
+
+
+	<!--
+		Add Base URL to relative links for images, scripts and CSS.
+	-->
+	<xsl:template match="xhtml:img/src | xhtml:link/href | xhtml:script/src">
+		<!-- Link is relative if does not contain :// -->
+		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
+		
+		<xsl:attribute name="{local-name(.)}">
+			<xsl:if test="$isRelativeLink">
+				<xsl:value-of select="$baseURL"/>
+				<xsl:text>/</xsl:text>
+			</xsl:if>
+			<xsl:value-of select="."/>
 		</xsl:attribute>
 	</xsl:template>
 
