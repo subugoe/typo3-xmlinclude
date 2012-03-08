@@ -51,6 +51,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 */
 	protected function addError ($message, $fileInfo = Null) {
 		$this->errors[] = Array('message' => $message, 'fileInfo' => $fileInfo);
+		t3lib_div::devLog('Error: ' . $message . '(' . $fileInfo . ')' , 'xmlinclude', 3);
 	}
 
 
@@ -92,7 +93,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		$XMLString = t3lib_div::getUrl($this->remoteURL());
 		if ($XMLString) {
 			$XML = new DOMDocument();
-			if ($XML->loadXML($XMLString) === TRUE) {
+			if ($XML->loadHTML($XMLString) === TRUE) {
 				// Apply array of XSLTs.
 				ksort($this->settings['XSL']);
 				foreach ($this->settings['XSL'] as $XSLPath) {
@@ -127,9 +128,16 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	private function remoteURL() {
 		// Build the remote request URL from the base URL and the URL parameter.
 		$arguments = $this->request->getArguments();
-		$remoteURL = $this->settings['baseURL'] . $arguments['URL'];
-		
-		// Take parameters from the target URL and add those from the parameters TypoScript variable.
+
+		$remoteURL = $this->settings['baseURL'];
+		if (array_key_exists('URL', $arguments)) {
+			$remoteURL .= $arguments['URL'];
+		}
+		else {
+			$remoteURL .= $settings['startURL'];
+		}
+
+			// Take parameters from the target URL and add those from the parameters TypoScript variable.
 		$URLParameters = Null;
 		$URLComponents = explode('?', $remoteURL, 2);
 		parse_str($URLComponents[1], $URLParameters);
@@ -140,7 +148,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		if ($newParameterString) {
 			$remoteURL = $URLComponents[0] . '?' . $newParameterString;
 		}
-
+debugster($remoteURL);
 		return $remoteURL;
 	}
 
@@ -165,6 +173,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		$XSLString = t3lib_div::getUrl($XSLPath);
 		$XSL = new DOMDocument();
 		if ($XSL->loadXML($XSLString)) {
+			$XSL->documentURI = pathinfo($XSLPath, PATHINFO_DIRNAME);
 			$xsltproc = new XSLTProcessor();
 			$xsltproc->importStylesheet($XSL);
 
