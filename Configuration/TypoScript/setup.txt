@@ -1,4 +1,7 @@
 plugin.tx_xmlinclude.settings {
+	# Set to 1 to use the HTML parser
+	parseAsHTML = 0
+
 	# Array of XSL files used to process the downloaded XML.
 	XSL {
 		50 = EXT:xmlinclude/Resources/Private/XSL/rewrite-urls.xsl
