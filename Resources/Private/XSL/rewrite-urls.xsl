@@ -37,16 +37,15 @@
 		</xsl:copy>
 	</xsl:template>
 
-
 	<!--
-		Rewrite Links in a/@href elements
+		Rewrite Links in a/@href and form/@action elements
 		* which are
 			* without a target attribute AND
 			* not marked with the $rewriteOffClass class AND
 			* relative links OR http(s) links whose host name is the same as our target site’s
 		* and those marked with the $rewriteOnClass class, regardless of other conditions
 	-->
-	<xsl:template match="a/@href | xhtml:a/@href">
+	<xsl:template match="a/@href | xhtml:a/@href | form/@action | xhtml:form/@action">
 		<!-- Link is relative if does not contain :// -->
 		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
 		<!-- Link is a http link if it does not begin with http:// or https:// -->
@@ -61,7 +60,7 @@
 			</xsl:if>
 			<xsl:value-of select="."/>
 		</xsl:variable>
-
+		
 		<xsl:attribute name="{local-name(.)}">
 			<xsl:choose>
 				<xsl:when test="( not(../@target) and
@@ -78,7 +77,34 @@
 					<xsl:value-of select="$URL"/>
 				</xsl:otherwise>
 			</xsl:choose>
+		</xsl:attribute>
+	</xsl:template>
 
+
+
+	<!--
+		Further form manipulation.
+		Use POST for all forms and pass the original method as a parameter.
+		Rewrite parameter names into the 'namespace' of the xmlinclude TYPO3 extension.
+	-->
+	<xsl:template match="form | xhtml:form">
+		<form>
+			<xsl:attribute name="method">POST</xsl:attribute>
+			<xsl:apply-templates select="@*[not(local-name() = 'method')] | node()"/>
+			<input type="hidden" name="tx_xmlinclude[formMethod]">
+				<xsl:attribute name="value">
+					<xsl:value-of select="./@method"/>
+				</xsl:attribute>
+			</input>
+		</form>
+	</xsl:template>
+	
+	<xsl:template match="input/@name | select/@name | textarea/@name
+						| xhtml:input/@name | xhtml:select/@name | xhtml:textarea/@name ">
+		<xsl:attribute name="name">
+			<xsl:text>tx_xmlinclude_xmlinclude[formParameters][</xsl:text>
+			<xsl:value-of select="."/>
+			<xsl:text>]</xsl:text>
 		</xsl:attribute>
 	</xsl:template>
 

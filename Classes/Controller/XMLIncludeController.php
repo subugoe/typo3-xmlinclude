@@ -93,9 +93,21 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			CURLOPT_RETURNTRANSFER => TRUE,
 			CURLOPT_HEADER => TRUE
 		);
-		// TODO handle POST case
-		if ($post) {
-			$curlOptions[CURLOPT_POST] = TRUE;
+
+		// Deal with Form submission:
+		// Detect forms by the formMethod parameter and use its value to submit the form.
+		// The form’s fields are expected to be in the formParamters variable.
+		$additionalURLParameters = Array();
+		$arguments = $this->request->getArguments();
+		if (array_key_exists('formParameters', $arguments)) {
+			if ($arguments['formMethod'] === 'POST') {
+				$curlOptions[CURLOPT_POST] = TRUE;
+				$curlOptions[CURLOPT_POSTFIELDS] = $arguments['formParameters'];
+			}
+			else {
+				// For GET requests append the additional parameters to the request URL.
+				$additionalURLParameters = $arguments['formParameters'];
+			}
 		}
 
 
@@ -167,11 +179,12 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * * the baseURL set in the FlexForm
 	 * * the URL argument
 	 * * the parameters TypoScript variable
-	 * 
+	 * * the parameters passed in $additionalURLParameters
+	 *
+	 * @param Array $additionalURLParameters [defaults to []]
 	 * @return string 
 	 */
-	private function remoteURL() {
-		// Build the remote request URL from the base URL and the URL parameter.
+	private function remoteURL($additionalURLParameters = Array()) {
 		$arguments = $this->request->getArguments();
 
 		$remoteURL = '';
@@ -182,11 +195,12 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$remoteURL .= $this->settings['startURL'];
 		}
 
-			// Take parameters from the target URL and add those from the parameters TypoScript variable.
+		// Take parameters from the target URL and add those from the parameters TypoScript variable.
 		$URLParameters = Null;
 		$URLComponents = explode('?', $remoteURL, 2);
 		parse_str($URLComponents[1], $URLParameters);
 		$URLParameters = array_merge($URLParameters, $this->settings['URLParameters']);
+		$URLParameters = array_merge($URLParameters, $additionalURLParameters);
 		
 		// Reassemble the URL with its new set of parameters.
 		$newParameterString = http_build_query($URLParameters);
