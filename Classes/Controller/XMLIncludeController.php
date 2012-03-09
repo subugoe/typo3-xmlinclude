@@ -88,10 +88,8 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * @return DOMDocument
 	 */
 	protected function XML () {
-		// Retrieve file.
-		$curl = curl_init();
+		// Configure connection.
 		$curlOptions = Array(
-			CURLOPT_URL => $this->remoteURL(),
 			CURLOPT_RETURNTRANSFER => TRUE,
 			CURLOPT_HEADER => TRUE
 		);
@@ -99,13 +97,23 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		if ($post) {
 			$curlOptions[CURLOPT_POST] = TRUE;
 		}
-		// TODO set cookies
-		$cookieString = '';
-		$curlOptions[CURLOPT_COOKIE] = $cookieString;
 
+
+		// Send cookies
+		$cookieParts = Array();
+		foreach ($_COOKIE as $cookieName => $cookieContent) {
+			if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
+				$cookieParts[] = urlencode($cookieName) . '=' . urlencode($cookieContent);
+			}
+		}
+		$curlOptions[CURLOPT_COOKIE] = implode('; ', $cookieParts);
+
+		// Run curl.
+		$curl = curl_init();
+		$curlOptions[CURLOPT_URL] = $this->remoteURL($additionalURLParameters);
 		curl_setopt_array($curl, $curlOptions);
-
 		$loadedString = curl_exec($curl);
+
 		if ($loadedString) {
 			$downloadParts = explode("\r\n\r\n", $loadedString, 2);
 
@@ -113,7 +121,9 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$cookies = $this->cookiesFromHeader($downloadParts[0]);
 			foreach ($cookies as $cookieName => $cookieContent) {
 				// TODO: Handle path (how?), expiry etc?
-				setcookie($cookieName, $cookieContent['value']);
+				if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
+					setcookie($cookieName, $cookieContent['value']);
+				}
 			}
 
 			// Parse file.
