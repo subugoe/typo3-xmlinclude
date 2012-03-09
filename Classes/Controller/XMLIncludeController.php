@@ -110,7 +110,6 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			}
 		}
 
-
 		// Send cookies
 		$cookieParts = Array();
 		foreach ($_COOKIE as $cookieName => $cookieContent) {
@@ -144,6 +143,9 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$parseSuccess = FALSE;
 
 			if ($this->settings['parseAsHTML'] == 1) {
+				// Assume we have UTF-8 encoding and escape based on that assumption.
+				// (To work around the poor handling of encodings in DOMDocument.)
+				$XMLString = mb_convert_encoding($XMLString, 'HTML-ENTITIES', "UTF-8");
 				$parseSuccess = $XML->loadHTML($XMLString);
 			}
 			else {
