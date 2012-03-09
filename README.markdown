@@ -50,12 +50,14 @@ The xmlinclude content element creates a div.xmlinclude and puts the transformed
 ## Configuration
 A number of settings can be adjusted with TypoScript values inside plugin.tx_xmlinclude.settings:
 
+* parseAsHTML [0]: If set to 1, uses the HTML parser instead of the XML parser.
 * XSL [{50 = EXT:xmlinclude/Resources/Private/XSL/rewrite-urls.xsl}]: Array of paths of stylesheets that are applied to the downloaded XML. See below for a description of the stylesheet used in the default setting. All values set in TypoScript will be passed to the stylesheet as XSL parameters.
 * URLParameters [{}]: Array of parameters that are added to the request URL. For example you could set plugin.tx_xmlinclude.settings.URLParameters.format = XML if the service you are reading needs a format=XML parameter that to deliver XML format.
 * headCSS [{}]: Array of paths or URLs of CSS files that should be included in the page’s head using style tags.
 * headJavaScript [{}]: Array of paths or URLs of stylesheets that should be included in the page’s head using script tags.
 * rewriteOnClass [rewrite-on]: String with a class name used in the default stylesheet to detect a tags whose links must be rewritten.
 * rewriteOffClass [rewrite-off]: String with a class name used by the default stylesheet to detect a tags whose links must not be rewritten.
+* cookiePassthrough [{}]: List of strings. Cookies with those names are passed between the connection to load the XML file and the connection to the browser.
 
 
 
@@ -73,8 +75,10 @@ The rewrite-urls.xsl stylesheet is included in the XSL processing be default. It
 
 
 ## Version History ##
-* 0.9b (2012-03-01): initial beta
 
+* 0.9 (2012-03-01): initial beta
+* 0.9.1 (2012-03-07): iron out problems with HTML vs XML parsing
+* 0.9.2 (2012-03-08): add cookie handling
 
 
 ## License ##

@@ -1,4 +1,5 @@
 plugin.tx_xmlinclude.settings {
+
 	# Set to 1 to use the HTML parser
 	parseAsHTML = 0
 
@@ -22,4 +23,9 @@ plugin.tx_xmlinclude.settings {
 	# Default CSS classes used to mark links that should/should not be rewritten.
 	rewriteOnClass = rewrite-on
 	rewriteOffClass = rewrite-off
+
+	# Names of cookies to share between our http connection and the TYPO3 response.
+	cookiePassthrough = {
+	}
+
 }

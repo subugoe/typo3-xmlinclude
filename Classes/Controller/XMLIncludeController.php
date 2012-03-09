@@ -89,12 +89,39 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 */
 	protected function XML () {
 		// Retrieve file.
-		$XMLString = t3lib_div::getUrl($this->remoteURL());
-		if ($XMLString) {
+		$curl = curl_init();
+		$curlOptions = Array(
+			CURLOPT_URL => $this->remoteURL(),
+			CURLOPT_RETURNTRANSFER => TRUE,
+			CURLOPT_HEADER => TRUE
+		);
+		// TODO handle POST case
+		if ($post) {
+			$curlOptions[CURLOPT_POST] = TRUE;
+		}
+		// TODO set cookies
+		$cookieString = '';
+		$curlOptions[CURLOPT_COOKIE] = $cookieString;
+
+		curl_setopt_array($curl, $curlOptions);
+
+		$loadedString = curl_exec($curl);
+		if ($loadedString) {
+			$downloadParts = explode("\r\n\r\n", $loadedString, 2);
+
+			// Read cookies and pass the interesting ones on to our user.
+			$cookies = $this->cookiesFromHeader($downloadParts[0]);
+			foreach ($cookies as $cookieName => $cookieContent) {
+				// TODO: Handle path (how?), expiry etc?
+				setcookie($cookieName, $cookieContent['value']);
+			}
+
 			// Parse file.
+			$XMLString = $downloadParts[1];
 			$XML = new DOMDocument();
 			$parseSuccess = FALSE;
-			if ($this->settings['parseAsHTML'] === 1) {
+
+			if ($this->settings['parseAsHTML'] == 1) {
 				$parseSuccess = $XML->loadHTML($XMLString);
 			}
 			else {
@@ -208,6 +235,54 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		}
 
 		return $XML;
+	}
+
+
+
+	/**
+	 * Takes the header of a http reply and returns an array containing
+	 * the cookies from the Set-Cookie lines in that header. Keys in that array
+	 * are the cookie names, the value is an array which has the cookie value
+	 * in the field 'value' and other cookie fields in fields named like
+	 * the field name
+	 *
+	 * If multiple cookies with the same name are set, the last one is used.
+	 *
+	 * @param string $headerString
+	 * @return Array
+	 */
+	protected function cookiesFromHeader($headerString) {
+		$cookies = Array();
+
+		$headerLines = explode("\r\n", $headerString);
+		foreach ($headerLines as $headerLine) {
+			$headerParts =  explode(':', $headerLine, 2);
+			if (count($headerParts) === 2) {
+				$headerName = trim(strtolower($headerParts[0]));
+				$headerValue = trim($headerParts[1]);
+				if ($headerName === 'set-cookie') {
+					$cookieParts = explode(';', $headerValue);
+					$cookieMainParts = explode('=', $cookieParts[0]);
+					if (count($cookieMainParts) === 2) {
+						$cookieName = $cookieMainParts[0];
+						$cookieValue = urldecode($cookieMainParts[1]);
+						$cookies[$cookieName] = Array('value' => $cookieValue);
+						if (count($cookieParts) > 1) {
+							$cookieOptions = array_slice($cookieParts, 1);
+							foreach($cookieOptions as $cookieOption) {
+								$cookieOptionParts = explode('=', $cookieOption, 2);
+								if (count($cookieOptionParts) === 2) {
+									$cookieOptionName = trim($cookieOptionParts[0]);
+									$cookieOptionValue = trim($cookieOptionParts[1]);
+									$cookies[$cookieName][$cookieOptionName] = $cookieOptionValue;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $cookies;
 	}
 }
 
