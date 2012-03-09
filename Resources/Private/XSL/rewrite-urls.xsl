@@ -11,6 +11,25 @@
 	<xsl:param name="rewriteOnClass"/>
 	<xsl:param name="rewriteOffClass"/>
 
+	<!--
+		If the document is html and has a base URL set, use that instead of the
+		baseURL parameter.
+	-->
+	<xsl:variable name="realBaseURL">
+		<xsl:choose>
+			<xsl:when test="/xhtml:html/xhtml:head/xhtml:base">
+				<xsl:value-of select="/xhtml:html/xhtml:head/xhtml:base/@href"/>
+			</xsl:when>
+			<xsl:when test="/html/head/base">
+				<xsl:value-of select="/html/head/base/@href"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$baseURL"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
+
 	<!-- Copy -->
 	<xsl:template match="@*|node()">
 		<xsl:copy>
@@ -27,7 +46,7 @@
 			* relative links OR http(s) links whose host name is the same as our target site’s
 		* and those marked with the $rewriteOnClass class, regardless of other conditions
 	-->
-	<xsl:template match="xhtml:a/@href">
+	<xsl:template match="a/@href | xhtml:a/@href">
 		<!-- Link is relative if does not contain :// -->
 		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
 		<!-- Link is a http link if it does not begin with http:// or https:// -->
@@ -35,6 +54,13 @@
 												substring(., 1, 8) = 'https://'"/>
 		<!-- Link’s host name is between the :// and the next / for http(s) URLs. -->
 		<xsl:variable name="HTTPHostName" select="substring-before(substring-after(., '://'), '/')"/>
+
+		<xsl:variable name="URL">
+			<xsl:if test="$isRelativeLink">
+				<xsl:value-of select="$realBaseURL"/>
+			</xsl:if>
+			<xsl:value-of select="."/>
+		</xsl:variable>
 
 		<xsl:attribute name="{local-name(.)}">
 			<xsl:choose>
@@ -45,11 +71,11 @@
 					<xsl:value-of select="$pageURL"/>
 					<xsl:text>?tx_xmlinclude_xmlinclude[URL]=</xsl:text>
 					<xsl:call-template name="url-encode">
-						<xsl:with-param name="str" select="."/>
+						<xsl:with-param name="str" select="$URL"/>
 					</xsl:call-template>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="."/>
+					<xsl:value-of select="$URL"/>
 				</xsl:otherwise>
 			</xsl:choose>
 
@@ -61,13 +87,14 @@
 	<!--
 		Add Base URL to relative links for images, scripts and CSS.
 	-->
-	<xsl:template match="xhtml:img/src | xhtml:link/href | xhtml:script/src">
+	<xsl:template match="xhtml:img/src | xhtml:link/href | xhtml:script/src
+							| img/src | link/href | script/src">
 		<!-- Link is relative if does not contain :// -->
 		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
 		
 		<xsl:attribute name="{local-name(.)}">
 			<xsl:if test="$isRelativeLink">
-				<xsl:value-of select="$baseURL"/>
+				<xsl:value-of select="$realBaseURL"/>
 				<xsl:text>/</xsl:text>
 			</xsl:if>
 			<xsl:value-of select="."/>
