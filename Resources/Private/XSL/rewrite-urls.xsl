@@ -11,6 +11,17 @@
 	<xsl:param name="rewriteOnClass"/>
 	<xsl:param name="rewriteOffClass"/>
 
+
+
+	<!-- Copy -->
+	<xsl:template match="@*|node()">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()"/>
+		</xsl:copy>
+	</xsl:template>
+	
+
+
 	<!--
 		If the document is html and has a base URL set, use that instead of the
 		baseURL parameter.
@@ -30,12 +41,6 @@
 	</xsl:variable>
 
 
-	<!-- Copy -->
-	<xsl:template match="@*|node()">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()"/>
-		</xsl:copy>
-	</xsl:template>
 
 	<!--
 		Rewrite Links in a/@href and form/@action elements
