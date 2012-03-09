@@ -164,7 +164,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		// Build the remote request URL from the base URL and the URL parameter.
 		$arguments = $this->request->getArguments();
 
-		$remoteURL = $this->settings['baseURL'];
+		$remoteURL = '';
 		if (array_key_exists('URL', $arguments)) {
 			$remoteURL .= $arguments['URL'];
 		}
