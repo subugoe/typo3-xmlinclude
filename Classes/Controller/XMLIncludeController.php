@@ -257,7 +257,9 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			// The basePageURL is the URL of the current _page_, defined by its page ID.
 			// It does not include the parameters appended to the path by RealURL.
 			if ($this->settings['useRealURL'] == '1') {
-				$pageURL = urldecode($this->uriBuilder->buildFrontendUri());
+				$pageURL = (t3lib_div::getIndpEnv('TYPO3_SITE_URL'));
+				$pageURL .= urldecode($this->uriBuilder->buildFrontendUri());
+				$pageURL = str_replace('//', '/', $pageURL);
 			}
 			$parameters['basePageURL'] = $pageURL;
 
