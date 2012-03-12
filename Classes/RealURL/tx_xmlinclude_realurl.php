@@ -38,7 +38,6 @@ class tx_xmlinclude_realurl {
 	 * @return	mixed		Depends on branching.
 	 */
 	public function main(array $params, tx_realurl $parent) {
-		xdebug_break();
 		// Grab all remaining 'pathParts' to create the full path we want.
 		$result = $params['value']. '/' . implode('/', $params['pathParts']);
 		// Remove the remaining 'pathParts' to prevent further processing.
