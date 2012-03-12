@@ -118,8 +118,8 @@
 	<!--
 		Add Base URL to relative links for images, scripts and CSS.
 	-->
-	<xsl:template match="xhtml:img/src | xhtml:link/href | xhtml:script/src
-							| img/src | link/href | script/src">
+	<xsl:template match="xhtml:img/@src | xhtml:link/@href | xhtml:script/@src
+							| img/@src | link/@href | script/@src">
 		<!-- Link is relative if does not contain :// -->
 		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
 		
