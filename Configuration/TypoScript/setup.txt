@@ -28,4 +28,7 @@ plugin.tx_xmlinclude.settings {
 	cookiePassthrough = {
 	}
 
+	# If set to 1 rewrite-urls.xsl will create links suitable for using RealURL rather than the visible URL parameter.
+	useRealURL = 0
+
 }

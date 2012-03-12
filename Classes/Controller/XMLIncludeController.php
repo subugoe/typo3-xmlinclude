@@ -190,7 +190,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		$arguments = $this->request->getArguments();
 
 		$remoteURL = '';
-		if (array_key_exists('URL', $arguments)) {
+		if (array_key_exists('URL', $arguments) && strlen($arguments['URL']) > 0) {
 			// Ensure we only fetch URLs beginning with our base URL.
 			if (strpos($arguments['URL'], $this->settings['baseURL']) !== 0) {
 				$remoteURL .= $this->settings['baseURL'];
@@ -244,11 +244,24 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 			// Add parameters to XSL:
 			// * everything in $this->settings
-			// * URL of current page as pageURL (to be used for URL building)
-			// * host name of target host
 			$parameters = $this->settings;
+
+			// * URL of current page as fullPageURL
+			// The fullPageURL is the current URL called by the browser wihout parameters.
+			// We determine it by removing a the URL argument from the end of the page URL.
 			$pageURLComponents = explode('?', $this->request->getRequestUri(), 2);
-			$parameters['pageURL'] = $pageURLComponents[0];
+			$pageURL = $pageURLComponents[0];
+			$parameters['fullPageURL'] = $pageURL;
+
+			// * URL of current base page (RealURL corresponding to page ID) as basePageURL
+			// The basePageURL is the URL of the current _page_, defined by its page ID.
+			// It does not include the parameters appended to the path by RealURL.
+			if ($this->settings['useRealURL'] == '1') {
+				$pageURL = urldecode($this->uriBuilder->buildFrontendUri());
+			}
+			$parameters['basePageURL'] = $pageURL;
+
+			// * host name of target host
 			$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
 			$parameters['hostName'] = $hostName;
 			$xsltproc->setParameter('', $parameters);

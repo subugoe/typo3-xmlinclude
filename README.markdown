@@ -58,19 +58,51 @@ A number of settings can be adjusted with TypoScript values inside plugin.tx_xml
 * rewriteOnClass [rewrite-on]: String with a class name used in the default stylesheet to detect a tags whose links must be rewritten.
 * rewriteOffClass [rewrite-off]: String with a class name used by the default stylesheet to detect a tags whose links must not be rewritten.
 * cookiePassthrough [{}]: List of strings. Cookies with those names are passed between the connection to load the XML file and the connection to the browser.
+* useRealURL [0]: Use RealURL to pass URLs to the extension. Read the section on RealURL for further instructions.
 
 
 
 ## The default stylesheet rewrite-urls.xsl
-The rewrite-urls.xsl stylesheet is included in the XSL processing be default. It expects to find XHTML content (do not forget the http://www.w3.org/1999/xhtml namespace) in the XML it receives and will rewrite the links of the href attributes of _some_ a elements in the XHTML.
+The rewrite-urls.xsl stylesheet is included in the XSL processing be default. It expects to find XHTML (with the http://www.w3.org/1999/xhtml namespace) or non-namespaced content in the XML it receives and will rewrite the urls for a, form, img, script and link tags in various ways:
 
-* Links are rewritten if they are
-	* without a target attribute AND
-	* not marked with the class set in the rewriteOffClass TypoScript variable AND
-	* relative links OR http(s) links whose host name is the same as our target site’s
-* Links are not rewritten if they
-	* do not satisfy the conditions above OR
-	* are marked with the class set in the rewriteOffClass TypoScript variable
+* URLs for `a` and `form` tags:
+	* are rewritten to go through TYPO3 if they are
+		* without a `target` attribute AND
+		* not marked with the class name set in the `rewriteOffClass` TypoScript variable [defaults to *rewrite-on*] AND
+		* relative links OR http(s) links whose host name is the same as our target site’s
+	* are *not* rewritten to go through TYPO3 if they
+		* do not satisfy the conditions above OR
+		* are marked with the class set in the `rewriteOffClass` TypoScript variable [defaults to *rewrite-off*]
+* URLs in `img`, `link` and `script` tags are prepended with the content of the base URL to create absolute links. The baseURL is determined using the baseURL setting as well as the content of html/head/base/@href, in case it exists.
+
+
+
+## RealURL ##
+You can use RealURL to transparently include the path on the remote server into your site. This is a bit unusual as we need to pass a full path through RealURL which usually splits up the path components. To deal with that this setup will use *all* remaining path components and may cause problems if other extensions add their rewritten path components as well.
+
+To use RealURL support, first turn it on in TypoScript using:
+
+	plugin.tx_xmlinclude.settings.useRealURL = 1
+
+Then add the following array to the (or a relevant) `fixedPostVars` entry of your RealURL configuration (e.g. `$TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars']`):
+
+	array (
+		'xmlinclude' => array (
+			array(
+				'GETvar' => 'tx_xmlinclude_xmlinclude[URL]',
+				'userFunc' => 'EXT:xmlinclude/Classes/RealURL/tx_xmlinclude_realurl.php:&tx_xmlinclude_realurl->main'
+			)
+		),
+		'2' => 'xmlinclude',
+	)
+
+This creates a setup `xmlinclude` which is only used on page ID 2. Add further lines
+
+		'3' => 'xmlinclude',
+		'73' => 'xmlinclude',
+		…
+
+to enable the same rewriting for page IDs 3, 73, ….
 
 
 
@@ -78,7 +110,8 @@ The rewrite-urls.xsl stylesheet is included in the XSL processing be default. It
 
 * 0.9 (2012-03-01): initial beta
 * 0.9.1 (2012-03-07): iron out problems with HTML vs XML parsing
-* 0.9.2 (2012-03-08): add cookie handling
+* 0.9.2 (2012-03-08): add cookie handling, add form handling for GET and POST, work around encoding issues for HTML content
+* 0.9.3 (2012-03-12): improve URL rewriting, include set up for RealURL
 
 
 ## License ##

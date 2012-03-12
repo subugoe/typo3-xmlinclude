@@ -5,11 +5,13 @@
 
 	<xsl:output method="xml"/>
 
-	<xsl:param name="pageURL"/>
+	<xsl:param name="basePageURL"/>
+	<xsl:param name="fullPageURL"/>
 	<xsl:param name="baseURL"/>
 	<xsl:param name="hostName"/>
 	<xsl:param name="rewriteOnClass"/>
 	<xsl:param name="rewriteOffClass"/>
+	<xsl:param name="useRealURL"/>
 
 
 
@@ -68,15 +70,23 @@
 		
 		<xsl:attribute name="{local-name(.)}">
 			<xsl:choose>
-				<xsl:when test="( not(../@target) and
-					not(contains(../@class, $rewriteOffClass)) and
-					($isRelativeLink or ($isHTTPLink and $HTTPHostName = $hostName)) ) or
-					($rewriteOnClass and contains(../@class, $rewriteOnClass))">
-					<xsl:value-of select="$pageURL"/>
-					<xsl:text>?tx_xmlinclude_xmlinclude[URL]=</xsl:text>
-					<xsl:call-template name="url-encode">
-						<xsl:with-param name="str" select="$URL"/>
-					</xsl:call-template>
+				<xsl:when test="
+					(	not(../@target)
+						and not(contains(../@class, $rewriteOffClass))
+						and ($isRelativeLink or ($isHTTPLink and $HTTPHostName = $hostName)) )
+					or ($rewriteOnClass and contains(../@class, $rewriteOnClass))">
+					<xsl:value-of select="$basePageURL"/>
+					<xsl:choose>
+						<xsl:when test="$useRealURL = '1'">
+							<xsl:value-of select="$URL"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:text>?tx_xmlinclude_xmlinclude[URL]=</xsl:text>
+							<xsl:call-template name="url-encode">
+								<xsl:with-param name="str" select="$URL"/>
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="$URL"/>
