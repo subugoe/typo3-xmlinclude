@@ -61,7 +61,7 @@
 
 		<xsl:variable name="URL">
 			<xsl:if test="$isRelativeLink">
-				<xsl:value-of select="$realBaseURL"/>
+				<xsl:value-of select="substring-after($realBaseURL, $baseURL)"/>
 			</xsl:if>
 			<xsl:value-of select="."/>
 		</xsl:variable>

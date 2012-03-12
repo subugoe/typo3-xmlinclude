@@ -191,6 +191,10 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 		$remoteURL = '';
 		if (array_key_exists('URL', $arguments)) {
+			// Ensure we only fetch URLs beginning with our base URL.
+			if (strpos($arguments['URL'], $this->settings['baseURL']) !== 0) {
+				$remoteURL .= $this->settings['baseURL'];
+			}
 			$remoteURL .= $arguments['URL'];
 		}
 		else {
