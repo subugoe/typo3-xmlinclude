@@ -66,6 +66,9 @@
 				<xsl:value-of select="substring-after($realBaseURL, $baseURL)"/>
 			</xsl:if>
 			<xsl:value-of select="."/>
+			<xsl:if test="substring(., string-length(.)-1, 1) != '/'">
+				<xsl:text>/</xsl:text>
+			</xsl:if>
 		</xsl:variable>
 		
 		<xsl:attribute name="{local-name(.)}">
