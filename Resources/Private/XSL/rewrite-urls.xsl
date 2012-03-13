@@ -30,11 +30,11 @@
 	-->
 	<xsl:variable name="realBaseURL">
 		<xsl:choose>
-			<xsl:when test="/xhtml:html/xhtml:head/xhtml:base">
-				<xsl:value-of select="/xhtml:html/xhtml:head/xhtml:base/@href"/>
-			</xsl:when>
 			<xsl:when test="/html/head/base">
 				<xsl:value-of select="/html/head/base/@href"/>
+			</xsl:when>
+			<xsl:when test="/xhtml:html/xhtml:head/xhtml:base">
+				<xsl:value-of select="/xhtml:html/xhtml:head/xhtml:base/@href"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$baseURL"/>
