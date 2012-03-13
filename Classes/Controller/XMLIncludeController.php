@@ -202,16 +202,22 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		}
 
 		// Take parameters from the target URL and add those from the parameters TypoScript variable.
-		$URLParameters = Null;
-		$URLComponents = explode('?', $remoteURL, 2);
-		parse_str($URLComponents[1], $URLParameters);
+		$URLParameters = NULL;
+		$remoteURLComponents = explode('?', $remoteURL, 2);
+		parse_str($remoteURLComponents[1], $URLParameters);
+		$queryURLParameters = NULL;
+		$queryURLComponents = explode('?', $this->request->getRequestUri(), 2);
+		if (count($queryURLComponents) === 2) {
+			parse_str($queryURLComponents[1], $queryURLParameters);
+			$URLParameters = array_merge($URLParameters, $queryURLParameters);
+		}
 		$URLParameters = array_merge($URLParameters, $this->settings['URLParameters']);
 		$URLParameters = array_merge($URLParameters, $additionalURLParameters);
 		
 		// Reassemble the URL with its new set of parameters.
 		$newParameterString = http_build_query($URLParameters);
 		if ($newParameterString) {
-			$remoteURL = $URLComponents[0] . '?' . $newParameterString;
+			$remoteURL = $remoteURLComponents[0] . '?' . $newParameterString;
 		}
 
 		return $remoteURL;
@@ -247,8 +253,8 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$parameters = $this->settings;
 
 			// * URL of current page as fullPageURL
-			// The fullPageURL is the current URL called by the browser wihout parameters.
-			// We determine it by removing a the URL argument from the end of the page URL.
+			// The fullPageURL is the current URL called by the browser without parameters.
+			// We determine it by removing the URL argument from the end of the page URL.
 			$pageURLComponents = explode('?', $this->request->getRequestUri(), 2);
 			$pageURL = $pageURLComponents[0];
 			$parameters['fullPageURL'] = $pageURL;
