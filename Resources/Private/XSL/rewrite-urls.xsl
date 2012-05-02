@@ -66,11 +66,12 @@
 				<xsl:value-of select="substring-after($realBaseURL, $baseURL)"/>
 			</xsl:if>
 			<xsl:value-of select="."/>
-			<xsl:if test="substring(., string-length(.)-1, 1) != '/'">
+			<xsl:if test="substring(., string-length(.), 1) != '/'
+							and not(contains(., '?'))">
 				<xsl:text>/</xsl:text>
 			</xsl:if>
 		</xsl:variable>
-		
+
 		<xsl:attribute name="{local-name(.)}">
 			<xsl:choose>
 				<xsl:when test="
@@ -81,7 +82,15 @@
 					<xsl:value-of select="$basePageURL"/>
 					<xsl:choose>
 						<xsl:when test="$useRealURL = '1'">
-							<xsl:value-of select="$URL"/>
+							<xsl:choose>
+								<xsl:when test="substring($basePageURL, string-length($basePageURL), 1) = '/'
+												and substring($URL, 1, 1) = '/'">
+									<xsl:value-of select="substring($URL, 2)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$URL"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:text>?tx_xmlinclude_xmlinclude[URL]=</xsl:text>
