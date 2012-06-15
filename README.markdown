@@ -2,7 +2,7 @@
 
 A TYPO3 extension for loading and transforming XML that is inserted into a content element.
 
-2012 by [Sven-S. Porst](http://earthlingsoft.net/ssp/), (SUB Göttingen)[http://www.sub.uni-goettingen.de] <[porst@sub.uni-goettingen.de](mailto:porst@sub.uni-goettingen.de?subject=xmlinclude%20TYPO3%20Extension)>
+2012 by [Sven-S. Porst](http://earthlingsoft.net/ssp/), [SUB Göttingen](http://www.sub.uni-goettingen.de) <[porst@sub.uni-goettingen.de](mailto:porst@sub.uni-goettingen.de?subject=xmlinclude%20TYPO3%20Extension)>
 
 If you have questions or remarks please send in comments or contribute improvements. You can fork the extension’s [repository at github](https://github.com/ssp/xmlinclude).
 
