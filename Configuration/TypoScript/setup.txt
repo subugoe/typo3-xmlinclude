@@ -28,6 +28,13 @@ plugin.tx_xmlinclude.settings {
 	cookiePassthrough {
 	}
 
+	# Path for which cookies are placed. Can be:
+	# * empty – no specific path is set, the path of the current RealURL is used;
+	#		This may differ from the path of the current TYPO3 page.
+	# * . [default] – the path of the current TYPO3 page is used.
+	# * string – explicitly give the path to be used (e.g. /)
+	cookiePath = .
+
 	# If set to 1 rewrite-urls.xsl will create links suitable for using RealURL rather than the visible URL parameter.
 	useRealURL = 0
 

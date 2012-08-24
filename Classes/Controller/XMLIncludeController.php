@@ -110,7 +110,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			}
 		}
 
-		// Send cookies
+		// Forward whitelisted cookies of the request to the server.
 		$cookieParts = Array();
 		foreach ($_COOKIE as $cookieName => $cookieContent) {
 			if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
@@ -118,7 +118,6 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			}
 		}
 		$curlOptions[CURLOPT_COOKIE] = implode('; ', $cookieParts);
-
 		// Run curl.
 		$curl = curl_init();
 		$curlOptions[CURLOPT_URL] = $this->remoteURL($additionalURLParameters);
@@ -128,12 +127,32 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		if ($loadedString) {
 			$downloadParts = explode("\r\n\r\n", $loadedString, 2);
 
-			// Read cookies and pass the interesting ones on to our user.
+			$cookiePath = $this->settings['cookiePath'];
+			if ($cookiePath === '.') {
+				// Get relative path to current page.
+				$cookiePath = $this->uriBuilder->reset()->build();
+
+				// Prepend base URL parts if necessary.
+				$siteURL = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+				$sitePath = parse_url($siteURL, PHP_URL_PATH);
+				if (strpos($cookiePath, $basePath) !== 0) {
+					$pathSeparator = '';
+					if ($cookiePath[0] !== '/' && $sitePath[strlen($sitePath)-1] !== '/') {
+						$pathSeparator = '/';
+					}
+					$cookiePath = $sitePath . $pathSeparator . $cookiePath;
+				}
+			}
+
+			// Read cookies from download.
 			$cookies = $this->cookiesFromHeader($downloadParts[0]);
+
+
+			// Pass the relevant cookies on to the user.
 			foreach ($cookies as $cookieName => $cookieContent) {
-				// TODO: Handle path (how?), expiry etc?
+				// TODO: handle expiry etc?
 				if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
-					setcookie($cookieName, $cookieContent['value']);
+					setrawcookie($cookieName, $cookieContent['value'], 0, $cookiePath);
 				}
 			}
 
@@ -317,7 +336,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 					$cookieMainParts = explode('=', $cookieParts[0]);
 					if (count($cookieMainParts) === 2) {
 						$cookieName = $cookieMainParts[0];
-						$cookieValue = urldecode($cookieMainParts[1]);
+						$cookieValue = $cookieMainParts[1];
 						$cookies[$cookieName] = Array('value' => $cookieValue);
 						if (count($cookieParts) > 1) {
 							$cookieOptions = array_slice($cookieParts, 1);

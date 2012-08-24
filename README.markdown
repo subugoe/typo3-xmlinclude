@@ -59,6 +59,7 @@ A number of settings can be adjusted with TypoScript values inside `plugin.tx_xm
 * `rewriteOnClass` [`rewrite-on`]: String with a class name used in the default stylesheet to detect a tags whose links must be rewritten.
 * `rewriteOffClass` [`rewrite-off`]: String with a class name used by the default stylesheet to detect a tags whose links must not be rewritten.
 * `cookiePassthrough` [`{}`]: List of strings. Cookies with those names are passed between the connection to load the XML file and the connection to the browser.
+* `cookiePath` [`.`]: String. If `.` the current TYPO3 page’s path is used for the cookie. If set to a string, that string is used for the cookie path.
 * `useRealURL` [`0`]: Use RealURL to pass URLs to the extension. Read the section on RealURL for further instructions.
 
 
@@ -109,6 +110,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## Version History ##
 
+* 1.1.0 (2012-08-??): make cookie path configurable
 * 1.0.0 (2012-05-02): improve RealURL support; fix configuration; improve URLs; call it 1.0
 * 0.9.3 (2012-03-12): improve URL rewriting; include set up for RealURL
 * 0.9.2 (2012-03-08): add cookie handling; add form handling for GET and POST; work around encoding issues for HTML content
