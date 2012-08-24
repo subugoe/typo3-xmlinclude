@@ -7,16 +7,6 @@
 		<type>array</type>
 		<el>
 
-			<settings.baseURL>
-				<TCEforms>
-					<label>LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.baseURL</label>
-					<config>
-						<type>input</type>
-						<size>255</size>
-					</config>
-				</TCEforms>
-			</settings.baseURL>
-
 			<settings.startURL>
 				<TCEforms>
 					<label>LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.startURL</label>
@@ -27,6 +17,15 @@
 				</TCEforms>
 			</settings.startURL>
 
+			<settings.baseURL>
+				<TCEforms>
+					<label>LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.baseURL</label>
+					<config>
+						<type>input</type>
+						<size>255</size>
+					</config>
+				</TCEforms>
+			</settings.baseURL>
 
 		</el>
 	</ROOT>
