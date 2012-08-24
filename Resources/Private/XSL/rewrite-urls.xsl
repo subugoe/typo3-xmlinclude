@@ -54,8 +54,8 @@
 	-->
 	<xsl:template match="a/@href | xhtml:a/@href | form/@action | xhtml:form/@action">
 		<!-- Link is relative if does not contain :// -->
-		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
-		<!-- Link is a http link if it does not begin with http:// or https:// -->
+		<xsl:variable name="isRelativeLink" select="not(contains(., ':'))"/>
+		<!-- Link is a http link if it begins with http:// or https:// -->
 		<xsl:variable name="isHTTPLink" select="substring(., 1, 7) = 'http://' or
 												substring(., 1, 8) = 'https://'"/>
 		<!-- Link’s host name is between the :// and the next / for http(s) URLs. -->
@@ -66,10 +66,6 @@
 				<xsl:value-of select="substring-after($realBaseURL, $baseURL)"/>
 			</xsl:if>
 			<xsl:value-of select="."/>
-			<xsl:if test="substring(., string-length(.), 1) != '/'
-							and not(contains(., '?'))">
-				<xsl:text>/</xsl:text>
-			</xsl:if>
 		</xsl:variable>
 
 		<xsl:attribute name="{local-name(.)}">
@@ -143,12 +139,20 @@
 	<xsl:template match="xhtml:img/@src | xhtml:link/@href | xhtml:script/@src
 							| img/@src | link/@href | script/@src">
 		<!-- Link is relative if does not contain :// -->
-		<xsl:variable name="isRelativeLink" select="not(contains(., '://'))"/>
+		<xsl:variable name="isRelativeLink" select="not(contains(., ':'))"/>
 		
 		<xsl:attribute name="{local-name(.)}">
 			<xsl:if test="$isRelativeLink">
-				<xsl:value-of select="$realBaseURL"/>
-				<xsl:text>/</xsl:text>
+				<xsl:value-of select="substring($realBaseURL, 1, string-length($realBaseURL)-1)"/>
+				<xsl:if test="not(substring($realBaseURL, string-length($realBaseURL), 1) = '/'
+								and substring(., 1, 1) = '/')">
+					<xsl:value-of select="substring($realBaseURL, string-length($realBaseURL), 1)"/>
+				</xsl:if>
+				<xsl:if test="substring($realBaseURL, string-length($realBaseURL), 1) != '/'
+								and substring(., 1, 1) != '/'">
+					<xsl:text>/</xsl:text>
+				</xsl:if>
+
 			</xsl:if>
 			<xsl:value-of select="."/>
 		</xsl:attribute>

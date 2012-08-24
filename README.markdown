@@ -110,7 +110,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## Version History ##
 
-* 1.1.0 (2012-08-??): make cookie path configurable; improve RealURL support
+* 1.1.0 (2012-08-??): make cookie path configurable; improve RealURL support; less superfluous slashes after rewrite-urls.xsl
 * 1.0.0 (2012-05-02): improve RealURL support; fix configuration; improve URLs; call it 1.0
 * 0.9.3 (2012-03-12): improve URL rewriting; include set up for RealURL
 * 0.9.2 (2012-03-08): add cookie handling; add form handling for GET and POST; work around encoding issues for HTML content
