@@ -24,27 +24,41 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-class tx_xmlinclude_realurl {
+class tx_xmlinclude_realurl extends tx_realurl_advanced {
 	/**
-	 * Main function, called for both encoding and deconding of URLs.
-	 * Based on the "mode" key in the $params array it branches out to either decode or encode functions.
-	 *
 	 * RealURL splits the request’s path up in its components but we want to
 	 * process all of them (as we want to map paths on a different server onto ours).
 	 * As a consequence this userFunc should only be used as the _last_ one.
 	 *
-	 * @param	array		Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
-	 * @param	tx_realurl		Copy of parent object. Not used.
-	 * @return	mixed		Depends on branching.
+	 * @param	array - Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
+	 * @param	tx_realurl - Copy of parent object. Not used.
+	 * @return	mixed - Depends on branching.
 	 */
 	public function main(array $params, tx_realurl $parent) {
-		// Grab all remaining 'pathParts' to create the full path we want.
-		$result = $params['value']. '/' . implode('/', $params['pathParts']);
-		// Remove the remaining 'pathParts' to prevent further processing.
-		array_splice($params['pathParts'], 0, count($params['pathParts']));
+		$result = false;
+
+		/**
+		 * This function is called multiple times with different parameters.
+		 * there is no clear documentation on what the differences between the
+		 * different calls are but the right thing seems to happen if we do so
+		 * in (typically?) the first run of the function which can be detected
+		 * by the fact that $GLOBALS['TSFE']->id is not set yet.
+		 *
+		 * In that case we do the following:
+		 * 1. return path given by $params['value'] + $params['pathParts'] as the result
+		 * 2. empty the array $params['pathParts']
+		 */
+		if (!$GLOBALS['TSFE']->id) {
+			// Grab all remaining 'pathParts' to create the full path we want.
+			$result = $params['value'];
+			if (count($params['pathParts']) > 0) {
+				$result .= '/' . implode('/', $params['pathParts']);
+				$params['pathParts'] = Array();
+			}
+		}
 		
 		return $result;
 	}
-}
 
+}
 ?>
