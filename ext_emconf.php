@@ -25,14 +25,13 @@ $EM_CONF[$_EXTKEY] = array(
 			'typo3' => '4.6.4-0.0.0',
 			'extbase' => '1.4.2-0.0.0',
 			'fluid' => '1.4.1-0.0.0',
-			'fed' => '1.4.11-0.0.0',
 		),
 		'conflicts' => array(
 		),
 		'suggests' => array(
 		),
 	),
-	'dependencies' => 'extbase,fluid,fed',
+	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
 	'suggests' => '',
 	'priority' => '',

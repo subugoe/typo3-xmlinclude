@@ -73,6 +73,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * @return void
 	 */
 	public function indexAction () {
+		$this->addResourcesToHead();
 		$XML = $this->XML();
 		if ($XML) {	$this->view->assign('xml', $XML->saveXML($XML->firstChild)); }
 		$this->view->assign('conf', $this->settings);
@@ -354,6 +355,32 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			}
 		}
 		return $cookies;
+	}
+
+
+
+	/**
+	 * Helper: Inserts style and script tags into the page’s head.
+	 *
+	 * @return void
+	 */
+	protected function addResourcesToHead() {
+		foreach ($this->settings['headCSS'] as $CSSPath) {
+			$styleTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('link');
+			$styleTag->addAttribute('rel', 'stylesheet');
+			$styleTag->addAttribute('type', 'text/css');
+			$styleTag->addAttribute('href', $CSSPath);
+			$styleTag->addAttribute('media', 'all');
+			$this->response->addAdditionalHeaderData( $styleTag->render() );
+		}
+
+		foreach ($this->settings['headJavaScript'] as $JSPath) {
+			$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
+			$scriptTag->addAttribute('type', 'text/javascript');
+			$scriptTag->addAttribute('src', $JSPath) ;
+			$scriptTag->forceClosingTag(TRUE);
+			$this->response->addAdditionalHeaderData( $scriptTag->render() );
+		}
 	}
 }
 
