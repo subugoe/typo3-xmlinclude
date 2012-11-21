@@ -290,31 +290,8 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$xsltproc = new XSLTProcessor();
 			$xsltproc->importStylesheet($XSL);
 
-			// Add parameters to XSL:
-			// * everything in $this->settings
-			$parameters = $this->settings;
-
-			// * URL of current page as fullPageURL
-			// The fullPageURL is the current URL called by the browser without parameters.
-			// We determine it by removing the URL argument from the end of the page URL.
-			$pageURLComponents = explode('?', $this->request->getRequestUri(), 2);
-			$pageURL = $pageURLComponents[0];
-			$parameters['fullPageURL'] = $pageURL;
-
-			// * URL of current base page (RealURL corresponding to page ID) as basePageURL
-			// The basePageURL is the URL of the current _page_, defined by its page ID.
-			// It does not include the parameters appended to the path by RealURL.
-			if ($this->settings['useRealURL'] == '1') {
-				$pageURL = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
-				$pageURL .= urldecode($this->uriBuilder->buildFrontendUri());
-				// Remove duplicated slashes.
-				$pageURL = preg_replace('/([^:])\/\//', '$1/', $pageURL);
-			}
-			$parameters['basePageURL'] = $pageURL;
-
-			// * host name of target host
-			$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
-			$parameters['hostName'] = $hostName;
+			// Pass parameters to XSL.
+			$parameters = $this->XSLParameters();
 			$xsltproc->setParameter('', $parameters);
 
 			// Transform the document.
@@ -333,6 +310,49 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 
 
+	/**
+	 * Returns the array of parameters to pass to the XSL transformation.
+	 *
+	 * @return Array parameters to pass to the XSL Transformation
+	 */
+	private function XSLParameters () {
+		$parameters = Array();
+
+		// Settings which are neither objects nor arrays.
+		foreach ($this->settings as $name => $value) {
+			if (! (is_object($value) || is_array($value))) {
+				$parameters[$name] = $value;
+			}
+		}
+	
+		// fullPageURL: URL of current page.
+		// The fullPageURL is the current URL called by the browser without parameters.
+		// We determine it by removing the URL argument from the end of the page URL.
+		$fullPageURLComponents = explode('?', $this->request->getRequestUri(), 2);
+		$fullPageURL = $fullPageURLComponents[0];
+		$parameters['fullPageURL'] = $fullPageURL;
+
+		// basePageURL: URL of current base page (RealURL corresponding to page ID).
+		// It does not include the parameters appended to the path by RealURL.
+		if ($this->settings['useRealURL'] == '1') {
+			$basePageURL = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+			$basePageURL .= urldecode($this->uriBuilder->buildFrontendUri());
+			// Remove duplicated slashes.
+			$basePageURL = preg_replace('/([^:])\/\//', '$1/', $basePageURL);
+		}
+		$parameters['basePageURL'] = $basePageURL;
+
+		// Name of the target host.
+		$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
+		$parameters['hostName'] = $hostName;
+
+
+
+		return $parameters;
+	}
+
+
+	
 	/**
 	 * Takes the header of a http reply and returns an array containing
 	 * the cookies from the Set-Cookie lines in that header. Keys in that array
