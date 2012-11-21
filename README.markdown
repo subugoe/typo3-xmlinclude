@@ -109,7 +109,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## Version History ##
 
-* 1.2.0 (2012-10-??): Allow 1024 character URLs in FlexForm
+* 1.2.0 (2012-11-21): allow longer URLs in FlexForm; fix problem with erroneously inserted slashes in URL rewriting
 * 1.1.0 (2012-09-24): make cookie path configurable; improve RealURL support; fewer superfluous slashes after rewrite-urls.xsl; do not depend on the fed extension
 * 1.0.0 (2012-05-02): improve RealURL support; fix configuration; improve URLs; call it 1.0
 * 0.9.3 (2012-03-12): improve URL rewriting; include set up for RealURL
