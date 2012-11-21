@@ -74,8 +74,21 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 */
 	public function indexAction () {
 		$this->addResourcesToHead();
+
+		if ($this->settings['showDebugInformation'] == '1') {
+			debug(Array(
+				'XSL Parameters' => $this->XSLParameters(),
+				'XSL' => $this->settings['XSL'],
+				'URLParameters' => $this->settings['URLParameters'],
+				'arguments' =>  $this->request->getArguments(),
+			));
+		}
+
 		$XML = $this->XML();
-		if ($XML) {	$this->view->assign('xml', $XML->saveXML($XML->firstChild)); }
+		if ($XML) {
+			$this->view->assign('xml', $XML->saveXML($XML->firstChild));
+		}
+
 		$this->view->assign('conf', $this->settings);
 		$this->view->assign('errors', $this->errors);
 	}
@@ -119,11 +132,20 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			}
 		}
 		$curlOptions[CURLOPT_COOKIE] = implode('; ', $cookieParts);
+
 		// Run curl.
 		$curl = curl_init();
-		$curlOptions[CURLOPT_URL] = $this->remoteURL($additionalURLParameters);
+		$remoteURL = $this->remoteURL($additionalURLParameters);
+		$curlOptions[CURLOPT_URL] = $remoteURL;
 		curl_setopt_array($curl, $curlOptions);
 		$loadedString = curl_exec($curl);
+
+		if ($this->settings['showDebugInformation'] == '1') {
+			debug(Array(
+				'curl Options' => $curlOptions,
+			));
+		}
+
 
 		if ($loadedString) {
 			$downloadParts = explode("\r\n\r\n", $loadedString, 2);
@@ -184,11 +206,11 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 				}
 			}
 			else {
-				$this->addError('Failed to parse XML from', $this->remoteURL());
+				$this->addError('Failed to parse XML from', $remoteURL);
 			}
 		}
 		else {
-			$this->addError('Failed to load XML from', $this->remoteURL());
+			$this->addError('Failed to load XML from', $remoteURL);
 		}
 
 		return $XML;
@@ -247,7 +269,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 	/**
 	 * Loads XSL from the given path and applies it to the given passed XML.
-	 * Returns the trasnformed XML document.
+	 * Returns the transformed XML document.
 	 *
 	 * @param string $XSLPath
 	 * @param DOMDocument $XML
@@ -354,6 +376,11 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 				}
 			}
 		}
+
+		if ($this->settings['showDebugInformation'] == '1') {
+			debug(Array('Cookies' => $cookies));
+		}
+
 		return $cookies;
 	}
 
