@@ -19,17 +19,17 @@ To run this extension you need:
 ## Description
 This extension enables inclusion of remote XML content into TYPO3 content elements. It does so in a 3 step process:
 
-### 1. Fetch the XML
-The base URL XML is fetched from can be set in the Plug-In’s FlexForm. The URL given there can be changed in two ways:
+### 1. Fetch the data
+The base URL data is fetched from can be set in the Plug-In’s FlexForm. The URL given there can be changed in two ways:
 
 1. a path given in the tx_xmlinclude_xmlinclude[URL] parameter will be appended to the base URL; when [used with RealURL](#realurl) this can be appended to the page’s path
 2. parameters set in the `plugin.tx_xmlinclude.settings.URLParameters` TypoScript array will be merged into the existing parameters of the URL
 
-By default fetching the file will fail if it cannot be parsed as XML. In case you need to fetch non-validating markup like broken HTML, you can [configure](#configuration) a more lenient parsing mode.
+By default fetching the file will fail if it cannot be parsed as XML. In case you want to fetch non-validating markup like broken HTML, or JSON you can [configure](#configuration) a more lenient parsing mode.
 
 
 ### 2. Transform the XML
-After reading and parsing the XML, it can be transformed by XSL stylesheets. Paths to those stylesheets are set in the `plugin.tx_xmlinclude.settings.XSL` TypoScript array. Stylesheets will be applied in the order of the keys in the array.
+After reading and parsing the data, it can be transformed by XSL stylesheets. Paths to those stylesheets are set in the `plugin.tx_xmlinclude.settings.XSL` TypoScript array. Stylesheets will be applied in the order of the keys in the array.
 
 A scenario this works well for is the following: given an XHTML webpage you can supply a stylesheet which extracts the content you are interested in and removes the rest. Then you can apply another stylesheet which transforms the links inside the XHTML to links pointing to your TYPO3 page. This lets you include other web resources in the design and context of your web site.
 
@@ -50,7 +50,7 @@ The xmlinclude content element creates a `div.xmlinclude` and puts the transform
 ## Configuration
 A number of settings can be adjusted with TypoScript values inside `plugin.tx_xmlinclude.settings`:
 
-* `parseAsHTML` [`0`]: If set to 1, uses the HTML parser instead of the XML parser.
+* `parser` [`xml`]: The parse type used. Allowed settings are `xml` for proper XML parsing, `html` for unreliable HTML parsing which tolerates errors and `json` for JSON parsing followed by conversion to an XML document.
 * `XSL` [`{50 = EXT:xmlinclude/Resources/Private/XSL/rewrite-urls.xsl}`]: Array of paths of stylesheets that are applied to the downloaded XML. See below for a description of the stylesheet used in the default setting. All values set in TypoScript will be passed to the stylesheet as XSL parameters.
 * `URLParameters` [`{}`]: Array of parameters that are added to the request URL. For example you could set `plugin.tx_xmlinclude.settings.URLParameters.format = XML` if the service you are reading needs a format=XML parameter that to deliver XML format.
 * `headCSS` [`{}`]: Array of paths or URLs of CSS files that should be included in the page’s head using style tags.
@@ -79,7 +79,7 @@ The rewrite-urls.xsl stylesheet is included in the XSL processing by default. It
 
 
 ## RealURL ##
-You can use RealURL to transparently include the path on the remote server into the URLs on your site. This is a bit unusual as we need to pass a full path through RealURL which usually splits up the path components. To deal with that this setup will use *all* remaining path components and may cause problems if other extensions add their rewritten path components as well.
+You can use RealURL to transparently include the path on the remote server into the URLs on your site. This is a bit unusual as we need to pass a full path through RealURL which usually splits up the path components. To deal with that, this setup will use *all* remaining path components and may cause problems if other extensions add their rewritten path components as well.
 
 To use RealURL support, first turn it on in TypoScript using:
 
@@ -109,6 +109,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## Version History ##
 
+* 2.0.0 (2012-12-??): add icon; add fake manual; support parsing JSON; '''replace the `parseAsHTML` TypoScript setting by `parser`'''
 * 1.2.0 (2012-11-21): allow longer URLs in FlexForm; fix problem with erroneously inserted slashes in URL rewriting
 * 1.1.0 (2012-09-24): make cookie path configurable; improve RealURL support; fewer superfluous slashes after rewrite-urls.xsl; do not depend on the fed extension
 * 1.0.0 (2012-05-02): improve RealURL support; fix configuration; improve URLs; call it 1.0
@@ -141,3 +142,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+## License for Array2XML.php class ##
+This extension includes the [Array2XML](http://www.lalit.org/lab/convert-php-array-to-xml-with-attributes/)
+PHP class by Lalit Patel. It is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).

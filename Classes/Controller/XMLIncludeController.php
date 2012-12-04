@@ -180,34 +180,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			}
 
 			// Parse file.
-			$XMLString = $downloadParts[1];
-			$XML = new DOMDocument();
-			$parseSuccess = FALSE;
-
-			if ($this->settings['parseAsHTML'] == 1) {
-				// Assume we have UTF-8 encoding and escape based on that assumption.
-				// (To work around the poor handling of encodings in DOMDocument.)
-				$XMLString = mb_convert_encoding($XMLString, 'HTML-ENTITIES', "UTF-8");
-				$parseSuccess = $XML->loadHTML($XMLString);
-			}
-			else {
-				$parseSuccess = $XML->loadXML($XMLString);
-			}
-
-			if ($parseSuccess) {
-				// Apply array of XSLTs.
-				ksort($this->settings['XSL']);
-				foreach ($this->settings['XSL'] as $XSLPath) {
-					$XML = $this->transformXMLWithXSLAtPath($XML, $XSLPath);
-					if (!$XML) {
-						$XML = Null;
-						break;
-					}
-				}
-			}
-			else {
-				$this->addError('Failed to parse XML from', $remoteURL);
-			}
+			$XML = $this->stringToXML($downloadParts[1]);
 		}
 		else {
 			$this->addError('Failed to load XML from', $remoteURL);
@@ -216,8 +189,80 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		return $XML;
 	}
 
-	
-	
+
+
+	/**
+	 * Attempts to transfor the passed $string to a XML DOMDocument.
+	 * Depending on our configuration, allow try parsing the string as XML
+	 * (straightforward XML parsing), HTML (dogy XML parsing) or JSON (JSON
+	 * parsing plus conversion to a XML document).
+	 *
+	 * @param String $string
+	 * @return DOMDocument
+	 */
+	private function stringToXML ($string) {
+		$XML = new DOMDocument();
+		$parseSuccess = FALSE;
+		if ($this->settings['parser'] === 'html') {
+			// Assume we have UTF-8 encoding and escape based on that assumption.
+			// (To work around the poor handling of encodings in DOMDocument.)
+			$string = mb_convert_encoding($string, 'HTML-ENTITIES', "UTF-8");
+			$parseSuccess = $XML->loadHTML($string);
+		}
+		else if ($this->settings['parser'] === 'json') {
+			$parseSuccess = $this->JSONStringToXML($string, $XML);
+		}
+		else {
+			$parseSuccess = $XML->loadXML($string);
+		}
+
+		if ($parseSuccess) {
+			// Apply array of XSLTs.
+			ksort($this->settings['XSL']);
+			foreach ($this->settings['XSL'] as $XSLPath) {
+				$XML = $this->transformXMLWithXSLAtPath($XML, $XSLPath);
+				if (!$XML) {
+					$XML = Null;
+					break;
+				}
+			}
+		}
+		else {
+			$this->addError('Failed to parse XML.');
+		}
+
+		return $XML;
+	}
+
+
+
+	/**
+	 * Converts the passed JSON string to a XML DOMDocument.
+	 *
+	 * @param String $JSONString
+	 * @param DOMDocument $XML
+	 * @return boolean
+	 */
+	private function JSONStringToXML ($JSONString, &$XML) {
+		$parseSuccess = FALSE;
+		$JSONArray = json_decode($JSONString, TRUE);
+		if ($JSONArray) {
+			require_once t3lib_extMgm::extPath('xmlinclude') . 'Classes/Utility/Array2XML.php';
+			$JSONXML = Array2XML::createXML('fromJSON', $JSONArray);
+			if ($JSONXML) {
+				$XML = $JSONXML;
+				$parseSuccess = TRUE;
+			}
+		}
+		else {
+			$this->addError('Failed to parse JSON (Error ' . json_last_error() . ').');
+		}
+
+		return  $parseSuccess;
+	}
+
+
+
 	/**
 	 * Builds the remote URL to load the XML from. Uses:
 	 * * the baseURL set in the FlexForm
