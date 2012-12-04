@@ -25,6 +25,29 @@
 				</TCEforms>
 			</settings.baseURL>
 
+			<settings.parser>
+				<TCEforms>
+					<label>LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.parser</label>
+					<config>
+						<type>select</type>
+						<items type="array">
+							<numIndex index="0" type="array">
+								<numIndex index="0">LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.parser.xml</numIndex>
+								<numIndex index="1">xml</numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.parser.html</numIndex>
+								<numIndex index="1">html</numIndex>
+							</numIndex>
+							<numIndex index="3" type="array">
+								<numIndex index="0">LLL:EXT:xmlinclude/Resources/Private/Language/locallang-flexform.xml:settings.parser.json</numIndex>
+								<numIndex index="1">json</numIndex>
+							</numIndex>
+						</items>
+					</config>
+				</TCEforms>
+			</settings.parser>
+
 		</el>
 	</ROOT>
 </T3DataStructure>

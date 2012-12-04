@@ -12,11 +12,19 @@
 		<languageKey index="en" type="array">
 			<label index="settings.baseURL">Base URL (for relative links)</label>
 			<label index="settings.startURL">Start URL (the start point for browsing)</label>
+			<label index="settings.parser">Data format</label>
+			<label index="settings.parser.xml">XML</label>
+			<label index="settings.parser.html">HTML</label>
+			<label index="settings.parser.json">JSON</label>
 		</languageKey>
 
 		<languageKey index="de" type="array">
 			<label index="settings.baseURL">Base-URL (Referenzpunkt für relative Links)</label>
 			<label index="settings.startURL">Start-URL (Startpunkt für den Seitenaufruf)</label>
+			<label index="settings.parser">Datenformat</label>
+			<label index="settings.parser.xml">XML</label>
+			<label index="settings.parser.html">HTML</label>
+			<label index="settings.parser.json">JSON</label>
 		</languageKey>
 
 	</data>
