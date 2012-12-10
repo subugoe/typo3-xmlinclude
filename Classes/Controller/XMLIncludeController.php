@@ -247,7 +247,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		$parseSuccess = FALSE;
 		$JSONArray = json_decode($JSONString, TRUE);
 		if ($JSONArray) {
-			require_once t3lib_extMgm::extPath('xmlinclude') . 'Classes/Utility/Array2XML.php';
+			require_once(t3lib_extMgm::extPath('xmlinclude') . 'Classes/Utility/Array2XML.php');
 			$JSONXML = Array2XML::createXML('fromJSON', $JSONArray);
 			if ($JSONXML) {
 				$XML = $JSONXML;
