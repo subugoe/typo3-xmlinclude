@@ -391,13 +391,37 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
 		$parameters['hostName'] = $hostName;
 
-
+		// Query arguments
+		$parameters += $this->flatArgumentList($this->request->getArguments());
 
 		return $parameters;
 	}
 
 
-	
+
+	/**
+	 * Returns a flattened Array of the passed arguments.
+	 *
+	 * @param type Array
+	 * @param type String
+	 * @return Array
+	 */
+	private function flatArgumentList ($array, $prefix = 'argument') {
+		$list = Array();
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$list += $this->flatArgumentList($value, $prefix . '-' . $key);
+			}
+			else {
+				$list[$prefix . '-' . $key] = $value;
+			}
+		}
+
+		return $list;
+	}
+
+
+
 	/**
 	 * Takes the header of a http reply and returns an array containing
 	 * the cookies from the Set-Cookie lines in that header. Keys in that array
