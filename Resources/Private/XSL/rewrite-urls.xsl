@@ -3,7 +3,7 @@
 	xmlns:xhtml="http://www.w3.org/1999/xhtml"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:output method="html"/>
+	<xsl:output method="html" indent="yes"/>
 
 	<xsl:param name="basePageURL"/>
 	<xsl:param name="fullPageURL"/>
