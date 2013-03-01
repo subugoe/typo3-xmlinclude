@@ -280,37 +280,40 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * @return string 
 	 */
 	private function remoteURL($additionalURLParameters = Array()) {
+		$remoteURL = '';
+
 		$arguments = $this->request->getArguments();
 
-		$remoteURL = '';
-		if (array_key_exists('URL', $arguments) && strlen($arguments['URL']) > 0) {
-			// Ensure we only fetch URLs beginning with our base URL.
-			if (strpos($arguments['URL'], $this->settings['baseURL']) !== 0) {
-				$remoteURL .= $this->settings['baseURL'];
+		if (strlen($this->settings['startURL']) > 0 || strlen($this->settings['baseURL']) > 0 ) {
+			if (array_key_exists('URL', $arguments) && strlen($arguments['URL']) > 0) {
+				// Ensure we only fetch URLs beginning with our base URL.
+				if (strpos($arguments['URL'], $this->settings['baseURL']) !== 0) {
+					$remoteURL .= $this->settings['baseURL'];
+				}
+				$remoteURL .= $arguments['URL'];
 			}
-			$remoteURL .= $arguments['URL'];
-		}
-		else {
-			$remoteURL .= $this->settings['startURL'];
-		}
+			else {
+				$remoteURL .= $this->settings['startURL'];
+			}
 
-		// Take parameters from the target URL and add those from the parameters TypoScript variable.
-		$URLParameters = NULL;
-		$remoteURLComponents = explode('?', $remoteURL, 2);
-		parse_str($remoteURLComponents[1], $URLParameters);
-		$queryURLParameters = NULL;
-		$queryURLComponents = explode('?', $this->request->getRequestUri(), 2);
-		if (count($queryURLComponents) === 2) {
-			parse_str($queryURLComponents[1], $queryURLParameters);
-			$URLParameters = array_merge($URLParameters, $queryURLParameters);
-		}
-		$URLParameters = array_merge($URLParameters, $this->settings['URLParameters']);
-		$URLParameters = array_merge($URLParameters, $additionalURLParameters);
-		
-		// Reassemble the URL with its new set of parameters.
-		$newParameterString = http_build_query($URLParameters);
-		if ($newParameterString) {
-			$remoteURL = $remoteURLComponents[0] . '?' . $newParameterString;
+			// Take parameters from the target URL and add those from the parameters TypoScript variable.
+			$URLParameters = NULL;
+			$remoteURLComponents = explode('?', $remoteURL, 2);
+			parse_str($remoteURLComponents[1], $URLParameters);
+			$queryURLParameters = NULL;
+			$queryURLComponents = explode('?', $this->request->getRequestUri(), 2);
+			if (count($queryURLComponents) === 2) {
+				parse_str($queryURLComponents[1], $queryURLParameters);
+				$URLParameters = array_merge($URLParameters, $queryURLParameters);
+			}
+			$URLParameters = array_merge($URLParameters, $this->settings['URLParameters']);
+			$URLParameters = array_merge($URLParameters, $additionalURLParameters);
+
+			// Reassemble the URL with its new set of parameters.
+			$newParameterString = http_build_query($URLParameters);
+			if ($newParameterString) {
+				$remoteURL = $remoteURLComponents[0] . '?' . $newParameterString;
+			}
 		}
 
 		return $remoteURL;
