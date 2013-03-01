@@ -136,54 +136,59 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		// Run curl.
 		$curl = curl_init();
 		$remoteURL = $this->remoteURL($additionalURLParameters);
-		$curlOptions[CURLOPT_URL] = $remoteURL;
-		curl_setopt_array($curl, $curlOptions);
-		$loadedString = curl_exec($curl);
 
-		if ($this->settings['showDebugInformation'] == '1') {
-			debug(Array(
-				'curl Options' => $curlOptions,
-			));
-		}
+		if ($remoteURL !== '') {
+			$curlOptions[CURLOPT_URL] = $remoteURL;
+			curl_setopt_array($curl, $curlOptions);
+			$loadedString = curl_exec($curl);
 
+			if ($this->settings['showDebugInformation'] == '1') {
+				debug(Array(
+					'curl Options' => $curlOptions,
+				));
+			}
 
-		if ($loadedString) {
-			$downloadParts = explode("\r\n\r\n", $loadedString, 2);
+			if ($loadedString) {
+				$downloadParts = explode("\r\n\r\n", $loadedString, 2);
 
-			$cookiePath = $this->settings['cookiePath'];
-			if ($cookiePath === '.') {
-				// Get relative path to current page.
-				$cookiePath = $this->uriBuilder->reset()->build();
+				$cookiePath = $this->settings['cookiePath'];
+				if ($cookiePath === '.') {
+					// Get relative path to current page.
+					$cookiePath = $this->uriBuilder->reset()->build();
 
-				// Prepend base URL parts if necessary.
-				$siteURL = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
-				$sitePath = parse_url($siteURL, PHP_URL_PATH);
-				if (strpos($cookiePath, $basePath) !== 0) {
-					$pathSeparator = '';
-					if ($cookiePath[0] !== '/' && $sitePath[strlen($sitePath)-1] !== '/') {
-						$pathSeparator = '/';
+					// Prepend base URL parts if necessary.
+					$siteURL = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+					$sitePath = parse_url($siteURL, PHP_URL_PATH);
+					if (strpos($cookiePath, $basePath) !== 0) {
+						$pathSeparator = '';
+						if ($cookiePath[0] !== '/' && $sitePath[strlen($sitePath)-1] !== '/') {
+							$pathSeparator = '/';
+						}
+						$cookiePath = $sitePath . $pathSeparator . $cookiePath;
 					}
-					$cookiePath = $sitePath . $pathSeparator . $cookiePath;
 				}
-			}
 
-			// Read cookies from download.
-			$cookies = $this->cookiesFromHeader($downloadParts[0]);
+				// Read cookies from download.
+				$cookies = $this->cookiesFromHeader($downloadParts[0]);
 
 
-			// Pass the relevant cookies on to the user.
-			foreach ($cookies as $cookieName => $cookieContent) {
-				// TODO: handle expiry etc?
-				if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
-					setrawcookie($cookieName, $cookieContent['value'], 0, $cookiePath);
+				// Pass the relevant cookies on to the user.
+				foreach ($cookies as $cookieName => $cookieContent) {
+					// TODO: handle expiry etc?
+					if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
+						setrawcookie($cookieName, $cookieContent['value'], 0, $cookiePath);
+					}
 				}
-			}
 
-			// Parse file.
-			$XML = $this->stringToXML($downloadParts[1]);
+				// Parse file.
+				$XML = $this->stringToXML($downloadParts[1]);
+			}
+			else {
+				$this->addError('Failed to load XML from', $remoteURL);
+			}
 		}
 		else {
-			$this->addError('Failed to load XML from', $remoteURL);
+			$XML = $this->stringToXML('<xmlinclude-root/>');
 		}
 
 		return $XML;
