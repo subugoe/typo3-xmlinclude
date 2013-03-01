@@ -339,6 +339,10 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		if ($XSL->loadXML($XSLString)) {
 			$XSL->documentURI = pathinfo($XSLPath, PATHINFO_DIRNAME);
 			$xsltproc = new XSLTProcessor();
+
+			// Add our own XML parsing function to XSL.
+			$xsltproc->registerPHPFunctions('Tx_XMLInclude_Controller_XMLIncludeController::parseXML');
+
 			$xsltproc->importStylesheet($XSL);
 
 			// Pass parameters to XSL.
@@ -504,6 +508,24 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$this->response->addAdditionalHeaderData( $scriptTag->render() );
 		}
 	}
+
+
+
+	/**
+	 * Static XML parsing function to be used from XSL to parse strings as XML and process them
+	 *
+	 * @param string XMLString
+	 * @return DOMDocument|Boolean
+	 */
+	static function parseXML ($string) {
+		$XML = new DOMDocument();
+		// Strip leading whitespace which may get in the way of parsing.
+		$strippedString = preg_replace('/^\s*/', '', $string);
+		$XML->loadXML($strippedString);
+
+		return $XML;
+	}
+
 }
 
 ?>
