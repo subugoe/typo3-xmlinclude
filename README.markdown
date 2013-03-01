@@ -25,13 +25,16 @@ The base URL data is fetched from can be set in the Plug-In’s FlexForm. The UR
 1. a path given in the tx_xmlinclude_xmlinclude[URL] parameter will be appended to the base URL; when [used with RealURL](#realurl) this can be appended to the page’s path
 2. parameters set in the `plugin.tx_xmlinclude.settings.URLParameters` TypoScript array will be merged into the existing parameters of the URL
 
-By default fetching the file will fail if it cannot be parsed as XML. In case you want to fetch non-validating markup like broken HTML, or JSON you can [configure](#configuration) a more lenient parsing mode.
+By default fetching the file will fail if it cannot be parsed as XML. In case you want to fetch non-XML files like broken HTML, or JSON you can [configure](#configuration) a more lenient or different parsing mode.
 
+When a blank no URL is given, no data is loaded and XSL processing is started with a document containing just a »xmlinclude-root« node.
 
 ### 2. Transform the XML
 After reading and parsing the data, it can be transformed by XSL stylesheets. Paths to those stylesheets are set in the `plugin.tx_xmlinclude.settings.XSL` TypoScript array. Stylesheets will be applied in the order of the keys in the array.
 
 A scenario this works well for is the following: given an XHTML webpage you can supply a stylesheet which extracts the content you are interested in and removes the rest. Then you can apply another stylesheet which transforms the links inside the XHTML to links pointing to your TYPO3 page. This lets you include other web resources in the design and context of your web site.
+
+A facility to parse additional XML which may be entered by the user in a form field is provided as an XSL function. It is called like `php:function('Tx_XMLInclude_Controller_XMLIncludeController::parseXML', string($xml-string))`
 
 ### 3. Insert the transformed XML into the web page
 The xmlinclude content element creates a `div.xmlinclude` and puts the transformed XML in there. In case there were errors during the conversion `h4.error` and `p.error` elements are inserted at the beginning of that div to indicate the problem.
@@ -109,7 +112,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## Version History ##
 
-* 2.0.0 (2012-12-??): add icon; add fake manual; support parsing JSON; '''replace the `parseAsHTML` TypoScript setting by `parser`'''
+* 2.0.0 (2013-03-??): add icon; add fake manual; support parsing JSON; '''replace the `parseAsHTML` TypoScript setting by `parser`'''; output as HTML instead of XML; allow usage without loading external data, driven just by XSL; pass URL arguments on to XSL as parameters; provide XML parsing as the XSL function
 * 1.2.0 (2012-11-21): allow longer URLs in FlexForm; fix problem with erroneously inserted slashes in URL rewriting
 * 1.1.0 (2012-09-24): make cookie path configurable; improve RealURL support; fewer superfluous slashes after rewrite-urls.xsl; do not depend on the fed extension
 * 1.0.0 (2012-05-02): improve RealURL support; fix configuration; improve URLs; call it 1.0
