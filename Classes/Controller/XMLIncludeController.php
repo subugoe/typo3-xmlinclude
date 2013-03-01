@@ -86,7 +86,8 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 		$XML = $this->XML();
 		if ($XML) {
-			$this->view->assign('xml', $XML->saveXML($XML->firstChild));
+			$XML->formatOutput = TRUE;
+			$this->view->assign('xml', $XML->saveHTML($XML->firstChild));
 		}
 
 		$this->view->assign('conf', $this->settings);
