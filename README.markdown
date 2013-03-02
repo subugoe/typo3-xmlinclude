@@ -2,7 +2,7 @@
 
 A TYPO3 extension for loading and transforming XML that is inserted into a content element.
 
-2012 by [Sven-S. Porst](http://earthlingsoft.net/ssp/), [SUB Göttingen](http://www.sub.uni-goettingen.de) <[porst@sub.uni-goettingen.de](mailto:porst@sub.uni-goettingen.de?subject=xmlinclude%20TYPO3%20Extension)>
+2012-2013 by [Sven-S. Porst](http://earthlingsoft.net/ssp/), [SUB Göttingen](http://www.sub.uni-goettingen.de) <[porst@sub.uni-goettingen.de](mailto:porst@sub.uni-goettingen.de?subject=xmlinclude%20TYPO3%20Extension)>
 
 If you have questions or remarks please send in comments or contribute improvements. You can fork the extension’s [repository at github](https://github.com/ssp/xmlinclude).
 
@@ -126,7 +126,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 MIT License to keep the people happy who need it.
 
 
-Copyright (C) 2012 by Sven-S. Porst
+Copyright (C) 2012-2013 by Sven-S. Porst
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
