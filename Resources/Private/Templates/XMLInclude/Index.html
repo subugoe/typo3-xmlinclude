@@ -1,3 +1,7 @@
+<f:if condition="{settings.showDebugInformation}">
+	<f:debug>{debugInformation}</f:debug>
+</f:if>
+
 <div class="xmlinclude">
 	<f:for each="{errors}" as="error">
 		<h4 class="error"><f:translate key="Error"></f:translate></h4>

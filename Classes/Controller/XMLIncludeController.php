@@ -57,12 +57,23 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 
 	/**
+	 * Array for debug information.
+	 * @var Array
+	 */
+	private $debugInformation;
+
+
+
+	/**
 	 * Initialiser
 	 *
 	 * @return void
 	 */
 	public function initializeAction () {
 		$this->errors = Array();
+		$this->debugInformation = Array(
+			'settings' => $this->settings
+		);
 	}
 
 
@@ -75,23 +86,15 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	public function indexAction () {
 		$this->addResourcesToHead();
 
-		if ($this->settings['showDebugInformation'] == '1') {
-			debug(Array(
-				'XSL Parameters' => $this->XSLParameters(),
-				'XSL' => $this->settings['XSL'],
-				'URLParameters' => $this->settings['URLParameters'],
-				'arguments' =>  $this->request->getArguments(),
-			));
-		}
-
 		$XML = $this->XML();
 		if ($XML) {
 			$XML->formatOutput = TRUE;
 			$this->view->assign('xml', $XML->saveHTML($XML->firstChild));
 		}
 
-		$this->view->assign('conf', $this->settings);
+		$this->view->assign('settings', $this->settings);
 		$this->view->assign('errors', $this->errors);
+		$this->view->assign('debugInformation', $this->debugInformation);
 	}
 
 
@@ -114,6 +117,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		// The form’s fields are expected to be in the formParamters variable.
 		$additionalURLParameters = Array();
 		$arguments = $this->request->getArguments();
+		$this->debugInformation['arguments'] = $arguments;
 		if (array_key_exists('formParameters', $arguments)) {
 			if ($arguments['formMethod'] === 'POST') {
 				$curlOptions[CURLOPT_POST] = TRUE;
@@ -140,14 +144,9 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 		if ($remoteURL !== '') {
 			$curlOptions[CURLOPT_URL] = $remoteURL;
+			$this->debugInformation['curlOptions'] =  $curlOptions;
 			curl_setopt_array($curl, $curlOptions);
 			$loadedString = curl_exec($curl);
-
-			if ($this->settings['showDebugInformation'] == '1') {
-				debug(Array(
-					'curl Options' => $curlOptions,
-				));
-			}
 
 			if ($loadedString) {
 				$downloadParts = explode("\r\n\r\n", $loadedString, 2);
@@ -407,6 +406,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		// Query arguments
 		$parameters += $this->flatArgumentList($this->request->getArguments());
 
+		$this->debugInformation['XSLParameters'] = $parameters;
 		return $parameters;
 	}
 
@@ -479,10 +479,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			}
 		}
 
-		if ($this->settings['showDebugInformation'] == '1') {
-			debug(Array('Cookies' => $cookies));
-		}
-
+		$this->debugInformation['cookiesFromServer'] = $cookies;
 		return $cookies;
 	}
 

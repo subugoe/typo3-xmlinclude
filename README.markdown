@@ -112,7 +112,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## Version History ##
 
-* 2.0.0 (2013-03-??): add icon; add fake manual; support parsing JSON; '''replace the `parseAsHTML` TypoScript setting by `parser`'''; output as HTML instead of XML; allow usage without loading external data, driven just by XSL; pass URL arguments on to XSL as parameters; provide XML parsing as the XSL function
+* 2.0.0 (2013-03-??): add icon; add fake manual; support parsing JSON; '''replace the `parseAsHTML` TypoScript setting by `parser`'''; output as HTML instead of XML; allow usage without loading external data, driven just by XSL; pass URL arguments on to XSL as parameters; provide XML parsing as the XSL function; use Fluid to show debug messages
 * 1.2.0 (2012-11-21): allow longer URLs in FlexForm; fix problem with erroneously inserted slashes in URL rewriting
 * 1.1.0 (2012-09-24): make cookie path configurable; improve RealURL support; fewer superfluous slashes after rewrite-urls.xsl; do not depend on the fed extension
 * 1.0.0 (2012-05-02): improve RealURL support; fix configuration; improve URLs; call it 1.0
