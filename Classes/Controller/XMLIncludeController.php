@@ -132,7 +132,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		// Forward whitelisted cookies of the request to the server.
 		$cookieParts = Array();
 		foreach ($_COOKIE as $cookieName => $cookieContent) {
-			if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
+			if ($this->settings['cookiePassthrough'] && in_array($cookieName, $this->settings['cookiePassthrough'])) {
 				$cookieParts[] = urlencode($cookieName) . '=' . urlencode($cookieContent);
 			}
 		}
