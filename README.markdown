@@ -80,6 +80,17 @@ The rewrite-urls.xsl stylesheet is included in the XSL processing by default. It
 * URLs in `img`, `link` and `script` tags are prepended with the content of the base URL to create absolute links. The baseURL is determined using the baseURL setting as well as the content of `html/head/base/@href`, in case it exists.
 
 
+## XSL Parameters
+A number of parameters are passed to each XSL that is called by default:
+
+* `argument-*`: arguments passed to the xmlinclude extension with name where `*` is a dash separated list of the key hierarchy (e.g. `tx_xmlinclude_xmlinclude[formParameters][xml]` is passed as `argument-formParameters-xml`)
+* `setting-*`: TypoScript settings in `plugin.tx_xmlinclude.settings.` where `*` is a dash separated list of the key hierarchy
+* `fullPageURL`: the full URL of the page without parameters
+* `basePageURL`: the URL of current base page (RealURL corresponding to page ID)
+* `hostName`: the host name in the `basePageURL`
+* `sitePath`: full path to the site’s folder in the host’s file system (can be useful for loading external files from XSL)
+* custom: all parameters configured in `plugin.tx_xmlinclude.settings.XSLParameters`
+
 
 ## RealURL ##
 You can use RealURL to transparently include the path on the remote server into the URLs on your site. This is a bit unusual as we need to pass a full path through RealURL which usually splits up the path components. To deal with that, this setup will use *all* remaining path components and may cause problems if other extensions add their rewritten path components as well.
@@ -112,7 +123,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## Version History ##
 
-* 2.0.0 (2013-03-??): add icon; add fake manual; support parsing JSON; '''replace the `parseAsHTML` TypoScript setting by `parser`'''; output as HTML instead of XML; allow usage without loading external data, driven just by XSL; pass URL arguments on to XSL as parameters; provide XML parsing as the XSL function; use Fluid to show debug messages
+* 2.0.0 (2013-03-??): add icon; add fake manual; support parsing JSON; '''replace the `parseAsHTML` TypoScript setting by `parser`'''; output as HTML instead of XML; allow usage without loading external data, driven just by XSL; re-name XSL parameters: prefix arguments with `argument-` and settings with `setting-`: this may break existign stylesheets; pass full file system path to site as parameter; provide XML parsing as an XSL function; use Fluid to show debug messages
 * 1.2.0 (2012-11-21): allow longer URLs in FlexForm; fix problem with erroneously inserted slashes in URL rewriting
 * 1.1.0 (2012-09-24): make cookie path configurable; improve RealURL support; fewer superfluous slashes after rewrite-urls.xsl; do not depend on the fed extension
 * 1.0.0 (2012-05-02): improve RealURL support; fix configuration; improve URLs; call it 1.0

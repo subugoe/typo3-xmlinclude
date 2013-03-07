@@ -348,7 +348,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$xsltproc->importStylesheet($XSL);
 
 			// Pass parameters to XSL.
-			$parameters = $this->XSLParameters();
+			$parameters = $this->XSLParametersForXSLPath($XSLPath);
 			$xsltproc->setParameter('', $parameters);
 
 			// Transform the document.
@@ -372,16 +372,13 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 *
 	 * @return Array parameters to pass to the XSL Transformation
 	 */
-	private function XSLParameters () {
-		$parameters = Array();
+	private function XSLParametersForXSLPath ($XSLPath) {
+		// Settings from TypoScript.
+		$parameters = $this->flattenedArray($this->settings, 'setting');
 
-		// Settings which are neither objects nor arrays.
-		foreach ($this->settings as $name => $value) {
-			if (! (is_object($value) || is_array($value))) {
-				$parameters[$name] = $value;
-			}
-		}
-	
+		// Query arguments.
+		$parameters += $this->flattenedArray($this->request->getArguments(), 'argument');
+
 		// fullPageURL: URL of current page.
 		// The fullPageURL is the current URL called by the browser without parameters.
 		// We determine it by removing the URL argument from the end of the page URL.
@@ -403,8 +400,11 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		$hostName = parse_url($this->settings['baseURL'], PHP_URL_HOST);
 		$parameters['hostName'] = $hostName;
 
-		// Query arguments
-		$parameters += $this->flatArgumentList($this->request->getArguments());
+		// File system paths of TYPO3, the XSL file and the folder containing it.
+		// These can be helpful for loading other XSL files from XSL as the path handling in PHP’s is unclear.
+		$parameters['sitePath'] = PATH_site;
+		$parameters['currentXSLPath'] = $XSLPath;
+		$parameters['currentXSLFolder'] = pathinfo($XSLPath, PATHINFO_DIRNAME) . '/';
 
 		$this->debugInformation['XSLParameters'] = $parameters;
 		return $parameters;
@@ -419,11 +419,11 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * @param type String
 	 * @return Array
 	 */
-	private function flatArgumentList ($array, $prefix = 'argument') {
+	private function flattenedArray ($array, $prefix = 'array') {
 		$list = Array();
 		foreach ($array as $key => $value) {
 			if (is_array($value)) {
-				$list += $this->flatArgumentList($value, $prefix . '-' . $key);
+				$list += $this->flattenedArray($value, $prefix . '-' . $key);
 			}
 			else {
 				$list[$prefix . '-' . $key] = $value;

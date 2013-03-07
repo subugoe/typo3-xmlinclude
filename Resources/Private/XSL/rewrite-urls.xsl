@@ -7,11 +7,11 @@
 
 	<xsl:param name="basePageURL"/>
 	<xsl:param name="fullPageURL"/>
-	<xsl:param name="baseURL"/>
+	<xsl:param name="setting-baseURL"/>
 	<xsl:param name="hostName"/>
-	<xsl:param name="rewriteOnClass"/>
-	<xsl:param name="rewriteOffClass"/>
-	<xsl:param name="useRealURL"/>
+	<xsl:param name="setting-rewriteOnClass"/>
+	<xsl:param name="setting-rewriteOffClass"/>
+	<xsl:param name="setting-useRealURL"/>
 
 
 
@@ -37,7 +37,7 @@
 				<xsl:value-of select="/xhtml:html/xhtml:head/xhtml:base/@href"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="$baseURL"/>
+				<xsl:value-of select="$setting-baseURL"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
@@ -48,9 +48,9 @@
 		Rewrite Links in a/@href and form/@action elements
 		* which are
 			* without a target attribute AND
-			* not marked with the $rewriteOffClass class AND
+			* not marked with the $setting-rewriteOffClass class AND
 			* relative links OR http(s) links whose host name is the same as our target site’s
-		* and those marked with the $rewriteOnClass class, regardless of other conditions
+		* and those marked with the $setting-rewriteOnClass class, regardless of other conditions
 	-->
 	<xsl:template match="a/@href | xhtml:a/@href | form/@action | xhtml:form/@action">
 		<!-- Link is relative if does not contain :// -->
@@ -63,7 +63,7 @@
 
 		<xsl:variable name="URL">
 			<xsl:if test="$isRelativeLink">
-				<xsl:value-of select="substring-after($realBaseURL, $baseURL)"/>
+				<xsl:value-of select="substring-after($realBaseURL, $setting-baseURL)"/>
 			</xsl:if>
 			<xsl:value-of select="."/>
 			<xsl:if test="substring(., string-length(.), 1) != '/'
@@ -76,12 +76,12 @@
 			<xsl:choose>
 				<xsl:when test="
 					(	not(../@target)
-						and not(contains(../@class, $rewriteOffClass))
+						and not(contains(../@class, $setting-rewriteOffClass))
 						and ($isRelativeLink or ($isHTTPLink and $HTTPHostName = $hostName)) )
-					or ($rewriteOnClass and contains(../@class, $rewriteOnClass))">
+					or ($setting-rewriteOnClass and contains(../@class, $setting-rewriteOnClass))">
 					<xsl:value-of select="$basePageURL"/>
 					<xsl:choose>
-						<xsl:when test="$useRealURL = '1'">
+						<xsl:when test="$setting-useRealURL = '1'">
 							<xsl:choose>
 								<xsl:when test="substring($basePageURL, string-length($basePageURL), 1) = '/'
 												and substring($URL, 1, 1) = '/'">
