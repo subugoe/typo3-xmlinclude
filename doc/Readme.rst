@@ -219,7 +219,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 Version History
 ---------------
 
-2.0.1 (2013-06-??):
+2.0.1 (2013-07-30):
 	* fix bug in loading file:/// URLs
 2.0.0 (2013-03-08):
 	* support parsing JSON (convert it to XML)
