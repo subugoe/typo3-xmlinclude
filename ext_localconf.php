@@ -25,24 +25,19 @@
  ******************************************************************************/
 
 
-if (!defined ('TYPO3_MODE')) die ('Access denied.');
-
-
+if (!defined('TYPO3_MODE')) die ('Access denied.');
 
 // Configure Plug-Ins
 
-Tx_Extbase_Utility_Extension::configurePlugin (
-	$_EXTKEY,
-	'xmlinclude', // Name used internally by Typo3
-	// Array holding the controller-action-combinations that are accessible
-	array(
-		// The first controller and its first action will be the default
-		'XMLInclude' => 'index'
-	),
-	// Array holding non-cachable controller-action-combinations
-	array(
-		'XMLInclude' => 'index'
-	)
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+		'Subugoe.' . $_EXTKEY,
+		'xmlinclude',
+		array(
+				'Include' => 'index'
+		),
+		array(
+				'Include' => 'index'
+		)
 );
 
 ?>

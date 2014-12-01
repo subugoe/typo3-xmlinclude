@@ -10,15 +10,14 @@ Göttingen <http://www.sub.uni-goettingen.de>`_
 
 If you have questions or remarks please send in comments or contribute
 improvements. You can fork the extension’s `repository at
-github <https://github.com/ssp/xmlinclude>`_.
+github <https://github.com/subugoe/xmlinclude>`_.
 
 Requirements
 ------------
 
 To run this extension you need:
 
--  TYPO3 ≥ 4.6.4 (not tested on earlier versions)
--  Extbase/Fluid ≥ 1.4
+-  TYPO3 ≥ 6.2.0
 
 Description
 -----------
@@ -63,7 +62,7 @@ design and context of your web site.
 
 A facility to parse additional XML which may be entered by the user in a
 form field is provided as an XSL function. It is called like
-``php:function('Tx_XMLInclude_Controller_XMLIncludeController::parseXML', string($xml-string))``
+``php:function('XmlUtility::parseXML', string($xml-string))``
 
 3. Insert the transformed XML into the web page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

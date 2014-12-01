@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml" class="grid_13">
+<h1 style="font-size: 274%;" class="ds-div-head">Septuaginta</h1>
+
+<div id="aspect_artifactbrowser_CollectionViewer_div_collection-home" class="ds-static-div primary repository collection">
+	<div id="aspect_artifactbrowser_CollectionViewer_div_collection-search-browse" class="ds-static-div secondary search-browse">
+		<div id="aspect_artifactbrowser_CollectionViewer_div_collection-browse" class="ds-static-div secondary browse">
+			<h3 class="ds-head">Blättern nach</h3>
+			<ul id="aspect_artifactbrowser_CollectionViewer_list_collection-browse" class="ds-simple-list collection-browse">
+				<li class="ds-simple-list-item">
+					<a href="/adw/handle/11858/71/browse?type=dateissued">Datum</a>
+				</li>
+				<li class="ds-simple-list-item">
+					<a href="/adw/handle/11858/71/browse?type=author">Autor</a>
+				</li>
+				<li class="ds-simple-list-item"/>
+				<li class="ds-simple-list-item">
+					<a href="/adw/handle/11858/71/browse?type=serie">Seriennummer</a>
+				</li>
+			</ul>
+		</div>
+		<form id="aspect_discovery_CollectionSearch_div_collection-search" class="ds-interactive-div secondary search" action="/adw/handle/11858/71/discover" method="post" onsubmit="javascript:tSubmit(this);">
+			<p id="aspect_discovery_CollectionSearch_p_search-query" class="ds-paragraph">Volltextsuche:
+				<input id="aspect_discovery_CollectionSearch_field_query" class="ds-text-field" name="query" type="text" value=""/>
+				<input id="aspect_discovery_CollectionSearch_field_submit" class="ds-button-field" name="submit" type="submit" value="Los"/>
+			</p>
+		</form>
+	</div>
+	<div id="aspect_artifactbrowser_CollectionViewer_div_collection-view" class="ds-static-div secondary">
+		<!-- External Metadata URL: cocoon://metadata/handle/11858/71/mets.xml-->
+		<div class="detail-view">
+
+		</div>
+	</div>
+</div>
+<div id="aspect_artifactbrowser_DateIssuedBrowse_div_browse-by-dateissued" class="ds-static-div primary">
+<div class="pagination clearfix top">
+	<p class="pagination-info">Anzeige der Dokumente 1-20 von 22</p>
+	<ul class="pagination-links">
+		<li>
+			<a class="next-page-link" href="/adw/handle/11858/71/browse?order=DESC&amp;rpp=20&amp;sort_by=1&amp;etal=-1&amp;offset=20&amp;type=dateissued">Nächste
+				Seite</a>
+		</li>
+	</ul>
+</div>
+<div id="aspect_artifactbrowser_DateIssuedBrowse_div_browse-by-dateissued-results" class="ds-static-div primary">
+<ul class="ds-artifact-list">
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A30C-8/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A30C-8" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A30C-8/Rahlfs-Sigeln_Stand_Dezember_2012.pdf.jpg?sequence=2"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A30C-8">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A30C-8&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Offizielles Verzeichnis der Rahlfs-Sigeln. Stand: Dezember 2012</span>
+</a>
+</span>
+			<span style="width: 455px;" class="content">Septuaginta-Unternehmen der Akademie der Wissenschaften zu Göttingen (Herausgeber)</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Göttingen, 2013-07-30</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C82E-0/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C82E-0" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C82E-0/MSU_25.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C82E-0">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=3-525-82525-0&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C82E-0&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text und Textgeschichte des 2. Esrabuches</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Hanhart, Robert</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 2003</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);25</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C7FB-A/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C7FB-A" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C7FB-A/MSU_23.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C7FB-A">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C7FB-A&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Der Deuteronomium-Text der Sacra Parallela</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Wahl, Otto</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1997</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);23</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C7FA-C/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C7FA-C" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C7FA-C/MSU_22.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C7FA-C">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C7FA-C&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Ein unbekannter Text zur griechischen Esra-Überlieferung - Lothar Perlitt zum 65. Geburtstag am 2. Mai 1995</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Hanhart, Robert</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1995</span>
+			<span style="width: 455px;" class="content">Abhandlungen der Akademie der Wissenschaften in Göttingen. Philologisch-historische Klasse;Jahrgang 1995, Nr. 4</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C82F-E/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C82F-E" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C82F-E/MSU_21.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C82F-E">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=3-525-82479-3&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C82F-E&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text History of the Greek Exodus</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Wevers, John William</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1992</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);21</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C830-8/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C830-8" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C830-8/MSU_19.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C830-8">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=3-525-82440-8&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C830-8&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text History of the Greek Leviticus</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Wevers, John William</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1986</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);19</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C831-6/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C831-6" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C831-6/MSU_17.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C831-6">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=3-525-82421-1&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C831-6&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text und Textgeschichte des Buches Tobit</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Hanhart, Robert</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1984</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);17</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C832-4/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C832-4" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C832-4/MSU_16.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C832-4">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=3-525-82411-4&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C832-4&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text History of the Greek Numbers</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Wevers, John William</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1982</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);16</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C833-2/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C833-2" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C833-2/MSU_14.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C833-2">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=3-525-82392-4&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C833-2&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text und Textgeschichte des Buches Judith</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Hanhart, Robert</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1979</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);14</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C7F9-E/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C7F9-E" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C7F9-E/MSU_15.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C7F9-E">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C7F9-E&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">The Typology of Literalism in ancient biblical translations</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Barr, James</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1979</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);15</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C834-F/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C834-F" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C834-F/MSU_13.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C834-F">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C834-F&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text History of the Greek Deuteronomy</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Wevers, John William</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1978</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);13</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C7F8-0/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C7F8-0" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C7F8-0/MSU_12.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C7F8-0">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=5-525-82365-7&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C7F8-0&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Text und Textgeschichte des 1. Esrabuches</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Hanhart, Robert</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1974</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);12</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-C7F7-1/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-C7F7-1" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-C7F7-1/MSU_7.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-C7F7-1">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-C7F7-1&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Zum Text des 2. und 3. Makkabäerbuches - Probleme der Überlieferung der Auslegung und der Ausgabe</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Hanhart, Robert</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Göttingen: Vandenhoeck &amp; Ruprecht, 1961</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);7</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A30E-4/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A30E-4" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A30E-4/MSU_4_komprimiert.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A30E-4">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A30E-4&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Paul de Lagardes wissenschaftliches Lebenswerk im Rahmen einer Geschichte seines Lebens dargestellt</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Rahlfs, Alfred</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Berlin: Weidmannsche Buchhandlung, 1928</span>
+			<span style="width: 455px;" class="content">Mitteilungen des Septuaginta-Unternehmens (MSU);4</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A30D-6/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A30D-6" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A30D-6/MSU_3-2_komprimiert.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A30D-6">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A30D-6&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Studie über den griechischen Text des Buches Ruth</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Rahlfs, Alfred</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Berlin: Weidmannsche Buchhandlung, 1922</span>
+			<span style="width: 455px;" class="content">Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, Philologisch-historische Klasse;1922</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A30B-A/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A30B-A" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A30B-A/MSU_3-1_komprimiert.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A30B-A">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A30B-A&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Über einige alttestamentliche Handschriften des Abessinierklosters S. Stefano zu Rom</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Rahlfs, Alfred</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Berlin: Weidmannsche Buchhandlung, 1918</span>
+			<span style="width: 455px;" class="content">Nachrichten von der Königlichen Gesellschaft der Wissenschaften zu Göttingen. Philologisch-historische Klasse;1918</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A310-B/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A310-B" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A310-B/MSU_1-6_komprimiert.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A310-B">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A310-B&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Hexaplarische Randnoten zu Isaias 1–16, aus einer Sinai-Handschrift</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Lütkemann, Leonhard</span>; <span>Rahlfs, Alfred</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Berlin: Weidmann, 1915</span>
+			<span style="width: 455px;" class="content">Nachrichten der Königlichen Gesellschaft der Wissenschaften zu Göttingen. Philologisch-historische Klasse;1915</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A311-9/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A311-9" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A311-9/MSU_1-7.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A311-9">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A311-9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Kleine Mitteilungen aus dem Septuaginta-Unternehmen</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Rahlfs, Alfred</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Berlin: Weidmann, 1915</span>
+			<span style="width: 455px;" class="content">Nachrichten der Königlichen Gesellschaft der Wissenschaften zu Göttingen. Philologisch-historische Klasse;1915</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A30F-2/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A30F-2" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A30F-2/MSU_1-5.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A30F-2">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A30F-2&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Die alttestamentlichen Lektionen der griechischen Kirche</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Rahlfs, Alfred</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Berlin: Weidmann, 1915</span>
+			<span style="width: 455px;" class="content">Nachrichten der Königlichen Gesellschaft der Wissenschaften zu Göttingen. Philologisch-historische Klasse;1915</span>
+		</div>
+	</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11858/00-001S-0000-0022-A312-7/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+	<div class="item-wrapper clearfix">
+		<div class="thumbnail-wrapper">
+			<div class="artifact-preview">
+				<a href="/adw/handle/11858/00-001S-0000-0022-A312-7" class="image-link">
+					<img alt="Thumbnail" src="/adw/bitstream/handle/11858/00-001S-0000-0022-A312-7/MSU_2_komprimiert.pdf.jpg?sequence=3"/>
+				</a>
+			</div>
+		</div>
+		<div style="width: 565px;" class="item-metadata">
+<span style="width: 455px;" class="content">
+<a href="/adw/handle/11858/00-001S-0000-0022-A312-7">
+	<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11858%2F00-001S-0000-0022-A312-7&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">Verzeichnis der griechischen Handschriften des Alten Testaments, für das Septuaginta-Unternehmen aufgestellt</span>
+</a>
+</span>
+<span style="width: 455px;" class="content">Autor <span>Rahlfs, Alfred</span>
+</span>
+			<br/>
+			<span style="width: 455px;" class="content">Berlin: Weidmann, 1914</span>
+			<span style="width: 455px;" class="content">Nachrichten der Königlichen Gesellschaft der Wissenschaften zu Göttingen. Philologisch-historische Klasse;1914</span>
+		</div>
+	</div>
+</li>
+</ul>
+</div>
+<div class="pagination clearfix bottom">
+	<p class="pagination-info">Anzeige der Dokumente 1-20 von 22</p>
+	<ul class="pagination-links">
+		<li>
+			<a class="next-page-link" href="/adw/handle/11858/71/browse?order=DESC&amp;rpp=20&amp;sort_by=1&amp;etal=-1&amp;offset=20&amp;type=dateissued">Nächste
+				Seite</a>
+		</li>
+	</ul>
+</div>
+</div>
+</div>

@@ -1,4 +1,6 @@
 <?php
+namespace Subugoe\Xmlinclude\Controller;
+
 /*******************************************************************************
  * Copyright notice
  *
@@ -24,44 +26,38 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-
-/**
- * XMLIncludeController.php
- *
- * Provides the main controller for the xmlinclude plug-in.
- *
- * @author Sven-S. Porst <porst@sub-uni-goettingen.de>
- */
-
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
 
 
 /**
  * XMLInclude controller for the XMLInclude extension.
+ * Provides the main controller for the xmlinclude plug-in.
  */
-class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Controller_ActionController {
+class IncludeController extends ActionController {
 
 	/**
 	 * Instance variable providing an array for error strings.
 	 * @var Array
 	 */
-	private $errors;
+	protected $errors;
 
 	/**
 	 * @param string $newError
 	 */
-	protected function addError ($message, $fileInfo = Null) {
+	protected function addError($message, $fileInfo = Null) {
 		$this->errors[] = Array('message' => $message, 'fileInfo' => $fileInfo);
-		t3lib_div::devLog('Error: ' . $message . '(' . $fileInfo . ')' , 'xmlinclude', 3);
+		GeneralUtility::devLog('Error: ' . $message . '(' . $fileInfo . ')', 'xmlinclude', 3);
 	}
-
 
 
 	/**
 	 * Array for debug information.
 	 * @var Array
 	 */
-	private $debugInformation;
-
+	protected $debugInformation;
 
 
 	/**
@@ -69,13 +65,12 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 *
 	 * @return void
 	 */
-	public function initializeAction () {
+	public function initializeAction() {
 		$this->errors = Array();
 		$this->debugInformation = Array(
-			'settings' => $this->settings
+				'settings' => $this->settings
 		);
 	}
-
 
 
 	/**
@@ -83,7 +78,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 *
 	 * @return void
 	 */
-	public function indexAction () {
+	public function indexAction() {
 		$this->addResourcesToHead();
 
 		$XML = $this->XML();
@@ -98,18 +93,20 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	}
 
 
-
 	/**
 	 * Loads and transforms XML according to settings.
 	 * Returns the resulting XML document.
 	 *
-	 * @return DOMDocument
+	 * @return \DOMDocument
 	 */
-	protected function XML () {
+	protected function XML() {
+
+		$XML = new \DOMDocument();
+
 		// Configure connection.
 		$curlOptions = Array(
-			CURLOPT_RETURNTRANSFER => TRUE,
-			CURLOPT_HEADER => TRUE
+				CURLOPT_RETURNTRANSFER => TRUE,
+				CURLOPT_HEADER => TRUE
 		);
 
 		// Deal with Form submission:
@@ -122,8 +119,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			if ($arguments['formMethod'] === 'POST') {
 				$curlOptions[CURLOPT_POST] = TRUE;
 				$curlOptions[CURLOPT_POSTFIELDS] = $arguments['formParameters'];
-			}
-			else {
+			} else {
 				// For GET requests append the additional parameters to the request URL.
 				$additionalURLParameters = $arguments['formParameters'];
 			}
@@ -145,7 +141,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		if ($remoteURL !== '') {
 			$curlOptions[CURLOPT_URL] = $remoteURL;
 			$isHTTPTransfer = (strpos($remoteURL, 'http') === 0);
-			$this->debugInformation['curlOptions'] =  $curlOptions;
+			$this->debugInformation['curlOptions'] = $curlOptions;
 			curl_setopt_array($curl, $curlOptions);
 			$loadedString = curl_exec($curl);
 			$contentString = $loadedString;
@@ -160,11 +156,11 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 						$cookiePath = $this->uriBuilder->reset()->build();
 
 						// Prepend base URL parts if necessary.
-						$siteURL = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+						$siteURL = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
 						$sitePath = parse_url($siteURL, PHP_URL_PATH);
 						if (strpos($cookiePath, $sitePath) !== 0) {
 							$pathSeparator = '';
-							if ($cookiePath[0] !== '/' && $sitePath[strlen($sitePath)-1] !== '/') {
+							if ($cookiePath[0] !== '/' && $sitePath[strlen($sitePath) - 1] !== '/') {
 								$pathSeparator = '/';
 							}
 							$cookiePath = $sitePath . $pathSeparator . $cookiePath;
@@ -182,25 +178,22 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 							setrawcookie($cookieName, $cookieContent['value'], 0, $cookiePath);
 						}
 					}
-					
+
 					// Replace content string with the body.
 					$contentString = $downloadParts[1];
 				}
 
 				// Parse file.
 				$XML = $this->stringToXML($contentString);
-			}
-			else {
+			} else {
 				$this->addError('Failed to load XML from', $remoteURL);
 			}
-		}
-		else {
+		} else {
 			$XML = $this->stringToXML('<xmlinclude-root/>');
 		}
 
 		return $XML;
 	}
-
 
 
 	/**
@@ -210,21 +203,19 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * parsing plus conversion to a XML document).
 	 *
 	 * @param String $string
-	 * @return DOMDocument
+	 * @return \DOMDocument
 	 */
-	private function stringToXML ($string) {
-		$XML = new DOMDocument();
+	protected function stringToXML($string) {
+		$XML = new \DOMDocument();
 		$parseSuccess = FALSE;
 		if ($this->settings['parser'] === 'html') {
 			// Assume we have UTF-8 encoding and escape based on that assumption.
 			// (To work around the poor handling of encodings in DOMDocument.)
 			$string = mb_convert_encoding($string, 'HTML-ENTITIES', "UTF-8");
 			$parseSuccess = $XML->loadHTML($string);
-		}
-		else if ($this->settings['parser'] === 'json') {
+		} else if ($this->settings['parser'] === 'json') {
 			$parseSuccess = $this->JSONStringToXML($string, $XML);
-		}
-		else {
+		} else {
 			$parseSuccess = $XML->loadXML($string);
 		}
 
@@ -234,12 +225,11 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			foreach ($this->settings['XSL'] as $XSLPath) {
 				$XML = $this->transformXMLWithXSLAtPath($XML, $XSLPath);
 				if (!$XML) {
-					$XML = Null;
+					$XML = NULL;
 					break;
 				}
 			}
-		}
-		else {
+		} else {
 			$this->addError('Failed to parse XML.');
 		}
 
@@ -247,32 +237,29 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	}
 
 
-
 	/**
 	 * Converts the passed JSON string to a XML DOMDocument.
 	 *
 	 * @param String $JSONString
-	 * @param DOMDocument $XML
+	 * @param \DOMDocument $XML
 	 * @return boolean
 	 */
-	private function JSONStringToXML ($JSONString, &$XML) {
+	protected function JSONStringToXML($JSONString, &$XML) {
 		$parseSuccess = FALSE;
 		$JSONArray = json_decode($JSONString, TRUE);
 		if ($JSONArray) {
-			require_once(t3lib_extMgm::extPath('xmlinclude') . 'Classes/Utility/Array2XML.php');
-			$JSONXML = Array2XML::createXML('fromJSON', $JSONArray);
+			require_once(ExtensionManagementUtility::extPath('xmlinclude') . 'Classes/Utility/Array2XML.php');
+			$JSONXML = \Array2XML::createXML('fromJSON', $JSONArray);
 			if ($JSONXML) {
 				$XML = $JSONXML;
 				$parseSuccess = TRUE;
 			}
-		}
-		else {
+		} else {
 			$this->addError('Failed to parse JSON (Error ' . json_last_error() . ').');
 		}
 
-		return  $parseSuccess;
+		return $parseSuccess;
 	}
-
 
 
 	/**
@@ -283,22 +270,21 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * * the parameters passed in $additionalURLParameters
 	 *
 	 * @param Array $additionalURLParameters [defaults to []]
-	 * @return string 
+	 * @return string
 	 */
-	private function remoteURL($additionalURLParameters = Array()) {
+	protected function remoteURL($additionalURLParameters = Array()) {
 		$remoteURL = '';
 
 		$arguments = $this->request->getArguments();
 
-		if (strlen($this->settings['startURL']) > 0 || strlen($this->settings['baseURL']) > 0 ) {
+		if (strlen($this->settings['startURL']) > 0 || strlen($this->settings['baseURL']) > 0) {
 			if (array_key_exists('URL', $arguments) && strlen($arguments['URL']) > 0) {
 				// Ensure we only fetch URLs beginning with our base URL.
 				if (strpos($arguments['URL'], $this->settings['baseURL']) !== 0) {
 					$remoteURL .= $this->settings['baseURL'];
 				}
 				$remoteURL .= $arguments['URL'];
-			}
-			else {
+			} else {
 				$remoteURL .= $this->settings['startURL'];
 			}
 
@@ -307,6 +293,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			$remoteURLComponents = explode('?', $remoteURL, 2);
 			parse_str($remoteURLComponents[1], $URLParameters);
 			$queryURLParameters = NULL;
+
 			$queryURLComponents = explode('?', $this->request->getRequestUri(), 2);
 			if (count($queryURLComponents) === 2) {
 				parse_str($queryURLComponents[1], $queryURLParameters);
@@ -326,16 +313,15 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	}
 
 
-
 	/**
 	 * Loads XSL from the given path and applies it to the given passed XML.
 	 * Returns the transformed XML document.
 	 *
 	 * @param string $XSLPath
-	 * @param DOMDocument $XML
-	 * @return DOMDocument|Null transformed XML
+	 * @param \DOMDocument $XML
+	 * @return \DOMDocument|Null transformed XML
 	 */
-	private function transformXMLWithXSLAtPath ($XML, $XSLPath) {
+	protected function transformXMLWithXSLAtPath($XML, $XSLPath) {
 		// Let TYPO3 analyse  the path settings to resolve potential 'EXT:'.
 		$processedPath = $GLOBALS['TSFE']->tmpl->getFileName($XSLPath);
 		if ($processedPath) {
@@ -343,14 +329,14 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		}
 
 		// Load XSL.
-		$XSLString = t3lib_div::getUrl($XSLPath);
-		$XSL = new DOMDocument();
+		$XSLString = GeneralUtility::getUrl($XSLPath);
+		$XSL = new \DOMDocument();
 		if ($XSL->loadXML($XSLString)) {
 			$XSL->documentURI = pathinfo($XSLPath, PATHINFO_DIRNAME);
-			$xsltproc = new XSLTProcessor();
+			$xsltproc = new \XSLTProcessor();
 
 			// Add our own XML parsing function to XSL.
-			$xsltproc->registerPHPFunctions('Tx_XMLInclude_Controller_XMLIncludeController::parseXML');
+			$xsltproc->registerPHPFunctions('XmlUtiliy::parseXML');
 
 			$xsltproc->importStylesheet($XSL);
 
@@ -363,8 +349,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 			if (!$XML) {
 				$this->addError('Failed to apply XSL', $XSLPath);
 			}
-		}
-		else {
+		} else {
 			$this->addError('Failed to load XSL', $XSLPath);
 			$XML = Null;
 		}
@@ -373,13 +358,12 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	}
 
 
-
 	/**
 	 * Returns the array of parameters to pass to the XSL transformation.
 	 *
 	 * @return Array parameters to pass to the XSL Transformation
 	 */
-	private function XSLParametersForXSLPath ($XSLPath) {
+	protected function XSLParametersForXSLPath($XSLPath) {
 		// Settings from TypoScript.
 		$parameters = $this->flattenedArray($this->settings, 'setting');
 
@@ -396,7 +380,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		// basePageURL: URL of current base page (RealURL corresponding to page ID).
 		// It does not include the parameters appended to the path by RealURL.
 		if ($this->settings['useRealURL'] == '1') {
-			$basePageURL = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+			$basePageURL = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
 			$basePageURL .= urldecode($this->uriBuilder->buildFrontendUri());
 			// Remove duplicated slashes.
 			$basePageURL = preg_replace('/([^:])\/\//', '$1/', $basePageURL);
@@ -418,7 +402,6 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	}
 
 
-
 	/**
 	 * Returns a flattened Array of the passed arguments.
 	 *
@@ -426,20 +409,18 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	 * @param type String
 	 * @return Array
 	 */
-	private function flattenedArray ($array, $prefix = 'array') {
+	protected function flattenedArray($array, $prefix = 'array') {
 		$list = Array();
 		foreach ($array as $key => $value) {
 			if (is_array($value)) {
 				$list += $this->flattenedArray($value, $prefix . '-' . $key);
-			}
-			else {
+			} else {
 				$list[$prefix . '-' . $key] = $value;
 			}
 		}
 
 		return $list;
 	}
-
 
 
 	/**
@@ -459,7 +440,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 
 		$headerLines = explode("\r\n", $headerString);
 		foreach ($headerLines as $headerLine) {
-			$headerParts =  explode(':', $headerLine, 2);
+			$headerParts = explode(':', $headerLine, 2);
 			if (count($headerParts) === 2) {
 				$headerName = trim(strtolower($headerParts[0]));
 				$headerValue = trim($headerParts[1]);
@@ -472,7 +453,7 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 						$cookies[$cookieName] = Array('value' => $cookieValue);
 						if (count($cookieParts) > 1) {
 							$cookieOptions = array_slice($cookieParts, 1);
-							foreach($cookieOptions as $cookieOption) {
+							foreach ($cookieOptions as $cookieOption) {
 								$cookieOptionParts = explode('=', $cookieOption, 2);
 								if (count($cookieOptionParts) === 2) {
 									$cookieOptionName = trim($cookieOptionParts[0]);
@@ -490,8 +471,6 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 		return $cookies;
 	}
 
-
-
 	/**
 	 * Helper: Inserts style and script tags into the page’s head.
 	 *
@@ -500,41 +479,24 @@ class Tx_XMLInclude_Controller_XMLIncludeController extends Tx_Extbase_MVC_Contr
 	protected function addResourcesToHead() {
 		if (array_key_exists('headCSS', $this->settings)) {
 			foreach ($this->settings['headCSS'] as $CSSPath) {
-				$styleTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('link');
+				$styleTag = new TagBuilder('link');
 				$styleTag->addAttribute('rel', 'stylesheet');
 				$styleTag->addAttribute('type', 'text/css');
 				$styleTag->addAttribute('href', $CSSPath);
 				$styleTag->addAttribute('media', 'all');
-				$this->response->addAdditionalHeaderData( $styleTag->render() );
+				$this->response->addAdditionalHeaderData($styleTag->render());
 			}
 		}
 
 		if (array_key_exists('headJavaScript', $this->settings)) {
 			foreach ($this->settings['headJavaScript'] as $JSPath) {
-				$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
+				$scriptTag = new TagBuilder('script');
 				$scriptTag->addAttribute('type', 'text/javascript');
-				$scriptTag->addAttribute('src', $JSPath) ;
+				$scriptTag->addAttribute('src', $JSPath);
 				$scriptTag->forceClosingTag(TRUE);
-				$this->response->addAdditionalHeaderData( $scriptTag->render() );
+				$this->response->addAdditionalHeaderData($scriptTag->render());
 			}
 		}
-	}
-
-
-
-	/**
-	 * Static XML parsing function to be used from XSL to parse strings as XML and process them
-	 *
-	 * @param string XMLString
-	 * @return DOMDocument|Boolean
-	 */
-	static function parseXML ($string) {
-		$XML = new DOMDocument();
-		// Strip leading whitespace which may get in the way of parsing.
-		$strippedString = preg_replace('/^\s*/', '', $string);
-		$XML->loadXML($strippedString);
-
-		return $XML;
 	}
 
 }
