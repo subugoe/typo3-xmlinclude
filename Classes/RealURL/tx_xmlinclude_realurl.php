@@ -1,4 +1,5 @@
 <?php
+
 /*******************************************************************************
  * Copyright notice
  *
@@ -23,16 +24,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-
 class tx_xmlinclude_realurl extends tx_realurl_advanced {
 	/**
 	 * RealURL splits the request’s path up in its components but we want to
 	 * process all of them (as we want to map paths on a different server onto ours).
 	 * As a consequence this userFunc should only be used as the _last_ one.
 	 *
-	 * @param	array - Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
-	 * @param	tx_realurl - Copy of parent object. Not used.
-	 * @return	mixed - Depends on branching.
+	 * @param    array - Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
+	 * @param    tx_realurl - Copy of parent object. Not used.
+	 * @return    mixed - Depends on branching.
 	 */
 	public function main(array $params, tx_realurl $parent) {
 		$result = false;
@@ -56,9 +56,9 @@ class tx_xmlinclude_realurl extends tx_realurl_advanced {
 				$params['pathParts'] = Array();
 			}
 		}
-		
+
 		return $result;
 	}
 
 }
-?>
+

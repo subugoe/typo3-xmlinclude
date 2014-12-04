@@ -212,6 +212,8 @@ class IncludeController extends ActionController {
 			// Assume we have UTF-8 encoding and escape based on that assumption.
 			// (To work around the poor handling of encodings in DOMDocument.)
 			$string = mb_convert_encoding($string, 'HTML-ENTITIES', "UTF-8");
+			$string = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $string);
+			libxml_use_internal_errors(TRUE);
 			$parseSuccess = $XML->loadHTML($string);
 		} else if ($this->settings['parser'] === 'json') {
 			$parseSuccess = $this->JSONStringToXML($string, $XML);
