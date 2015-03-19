@@ -21,7 +21,7 @@
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:copy>
 	</xsl:template>
-	
+
 
 
 	<!--
@@ -66,10 +66,6 @@
 				<xsl:value-of select="substring-after($realBaseURL, $setting-baseURL)"/>
 			</xsl:if>
 			<xsl:value-of select="."/>
-			<xsl:if test="substring(., string-length(.), 1) != '/'
-							and not(contains(., '?'))">
-				<xsl:text>/</xsl:text>
-			</xsl:if>
 		</xsl:variable>
 
 		<xsl:attribute name="{local-name(.)}">
@@ -125,7 +121,7 @@
 			</input>
 		</form>
 	</xsl:template>
-	
+
 	<xsl:template match="input/@name | select/@name | textarea/@name
 						| xhtml:input/@name | xhtml:select/@name | xhtml:textarea/@name ">
 		<xsl:attribute name="name">
@@ -144,7 +140,7 @@
 							| img/@src | link/@href | script/@src">
 		<!-- Link is relative if does not contain :// -->
 		<xsl:variable name="isRelativeLink" select="not(contains(., ':'))"/>
-		
+
 		<xsl:attribute name="{local-name(.)}">
 			<xsl:if test="$isRelativeLink">
 				<xsl:value-of select="substring($realBaseURL, 1, string-length($realBaseURL)-1)"/>
