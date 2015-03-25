@@ -75,13 +75,12 @@
 						and not(contains(../@class, $setting-rewriteOffClass))
 						and ($isRelativeLink or ($isHTTPLink and $HTTPHostName = $hostName)) )
 					or ($setting-rewriteOnClass and contains(../@class, $setting-rewriteOnClass))">
-					<xsl:value-of select="$basePageURL"/>
 					<xsl:choose>
 						<xsl:when test="$setting-useRealURL = '1'">
 							<xsl:choose>
 								<xsl:when test="substring($basePageURL, string-length($basePageURL), 1) = '/'
 												and substring($URL, 1, 1) = '/'">
-									<xsl:value-of select="substring($URL, 2)"/>
+									<xsl:value-of select="concat($basePageURL, substring($URL, 2))"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of select="$URL"/>
@@ -97,7 +96,14 @@
 					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="$URL"/>
+					<xsl:choose>
+						<xsl:when test="( (contains(../@class, $setting-rewriteOffClass)) and ($isRelativeLink) )">
+							<xsl:value-of select="concat($basePageURL, substring($URL, 2))"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$URL"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
@@ -152,7 +158,6 @@
 								and substring(., 1, 1) != '/'">
 					<xsl:text>/</xsl:text>
 				</xsl:if>
-
 			</xsl:if>
 			<xsl:value-of select="."/>
 		</xsl:attribute>
