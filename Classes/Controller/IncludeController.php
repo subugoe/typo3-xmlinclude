@@ -26,6 +26,7 @@ namespace Subugoe\Xmlinclude\Controller;
  * THE SOFTWARE.
  ******************************************************************************/
 
+use Subugoe\Xmlinclude\Utility\Array2XML;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -45,9 +46,10 @@ class IncludeController extends ActionController {
 	protected $errors;
 
 	/**
-	 * @param string $newError
+	 * @param string $message
+	 * @param string $fileInfo
 	 */
-	protected function addError($message, $fileInfo = Null) {
+	protected function addError($message, $fileInfo = NULL) {
 		$this->errors[] = Array('message' => $message, 'fileInfo' => $fileInfo);
 		GeneralUtility::devLog('Error: ' . $message . '(' . $fileInfo . ')', 'xmlinclude', 3);
 	}
@@ -68,7 +70,7 @@ class IncludeController extends ActionController {
 	public function initializeAction() {
 		$this->errors = Array();
 		$this->debugInformation = Array(
-				'settings' => $this->settings
+			'settings' => $this->settings
 		);
 	}
 
@@ -105,8 +107,8 @@ class IncludeController extends ActionController {
 
 		// Configure connection.
 		$curlOptions = Array(
-				CURLOPT_RETURNTRANSFER => TRUE,
-				CURLOPT_HEADER => TRUE
+			CURLOPT_RETURNTRANSFER => TRUE,
+			CURLOPT_HEADER => TRUE
 		);
 
 		// Deal with Form submission:
@@ -251,7 +253,7 @@ class IncludeController extends ActionController {
 		$JSONArray = json_decode($JSONString, TRUE);
 		if ($JSONArray) {
 			require_once(ExtensionManagementUtility::extPath('xmlinclude') . 'Classes/Utility/Array2XML.php');
-			$JSONXML = \Array2XML::createXML('fromJSON', $JSONArray);
+			$JSONXML = Array2XML::createXML('fromJSON', $JSONArray);
 			if ($JSONXML) {
 				$XML = $JSONXML;
 				$parseSuccess = TRUE;

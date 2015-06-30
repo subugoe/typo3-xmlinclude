@@ -1,4 +1,5 @@
 <?php
+namespace Subugoe\Xmlinclude\Utility;
 
 /**
  * Array2XML: A class to convert array in PHP to XML
@@ -33,7 +34,14 @@
  */
 class Array2XML {
 
+	/**
+	 * @var \DOMDocument
+	 */
 	private static $xml = null;
+
+	/**
+	 * @var string
+	 */
 	private static $encoding = 'UTF-8';
 
 	/**
@@ -43,7 +51,7 @@ class Array2XML {
 	 * @param $format_output
 	 */
 	public static function init($version = '1.0', $encoding = 'UTF-8', $format_output = true) {
-		self::$xml = new DomDocument($version, $encoding);
+		self::$xml = new \DomDocument($version, $encoding);
 		self::$xml->formatOutput = $format_output;
 		self::$encoding = $encoding;
 	}
@@ -52,7 +60,7 @@ class Array2XML {
 	 * Convert an Array to XML
 	 * @param string $node_name - name of the root node to be converted
 	 * @param array $arr - aray to be converterd
-	 * @return DomDocument
+	 * @return \DomDocument
 	 */
 	public static function &createXML($node_name, $arr = array()) {
 		$xml = self::getXMLRoot();
@@ -66,7 +74,8 @@ class Array2XML {
 	 * Convert an Array to XML
 	 * @param string $node_name - name of the root node to be converted
 	 * @param array $arr - aray to be converterd
-	 * @return DOMNode
+	 * @return \DOMNode
+	 * @throws \Exception
 	 */
 	private static function &convert($node_name, $arr = array()) {
 
@@ -79,7 +88,7 @@ class Array2XML {
 			if (isset($arr['@attributes'])) {
 				foreach ($arr['@attributes'] as $key => $value) {
 					if (!self::isValidTagName($key)) {
-						throw new Exception('[Array2XML] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
+						throw new \Exception('[Array2XML] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
 					}
 					$node->setAttribute($key, self::bool2str($value));
 				}
@@ -106,7 +115,7 @@ class Array2XML {
 			// recurse to get the node for that key
 			foreach ($arr as $key => $value) {
 				if (!self::isValidTagName($key)) {
-					throw new Exception('[Array2XML] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
+					throw new \Exception('[Array2XML] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
 				}
 				if (is_array($value) && is_numeric(key($value))) {
 					// MORE THAN ONE NODE OF ITS KIND;
@@ -132,8 +141,10 @@ class Array2XML {
 		return $node;
 	}
 
-	/*
+	/**
 	 * Get the root XML node, if there isn't one, create it.
+	 *
+	 * @return \DOMDocument
 	 */
 	private static function getXMLRoot() {
 		if (empty(self::$xml)) {
@@ -142,8 +153,10 @@ class Array2XML {
 		return self::$xml;
 	}
 
-	/*
+	/**
 	 * Get string representation of boolean value
+	 * @param boolean $v
+	 * @return string
 	 */
 	private static function bool2str($v) {
 		//convert boolean to text value.
@@ -152,14 +165,15 @@ class Array2XML {
 		return $v;
 	}
 
-	/*
+	/**
 	 * Check if the tag name or attribute name contains illegal characters
 	 * Ref: http://www.w3.org/TR/xml/#sec-common-syn
+	 *
+	 * @param string $tag
+	 * @return int
 	 */
 	private static function isValidTagName($tag) {
 		$pattern = '/^[a-z_]+[a-z0-9\:\-\.\_]*[^:]*$/i';
 		return preg_match($pattern, $tag, $matches) && $matches[0] == $tag;
 	}
 }
-
-?>
