@@ -38,12 +38,12 @@ if (!defined('TYPO3_MODE')) die ('Access denied.');
 
 
 // Add flexform for both plug-ins.
-$plugInFlexForms = Array(
-		Array(
+$plugInFlexForms = [
+		[
 				'plugIn' => 'xmlinclude',
 				'flexForm' => 'XMLInclude'
-		),
-);
+        ],
+];
 
 $extensionName = strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY));
 

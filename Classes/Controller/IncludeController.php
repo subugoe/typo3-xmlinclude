@@ -50,7 +50,7 @@ class IncludeController extends ActionController {
 	 * @param string $fileInfo
 	 */
 	protected function addError($message, $fileInfo = NULL) {
-		$this->errors[] = Array('message' => $message, 'fileInfo' => $fileInfo);
+		$this->errors[] = ['message' => $message, 'fileInfo' => $fileInfo];
 		GeneralUtility::devLog('Error: ' . $message . '(' . $fileInfo . ')', 'xmlinclude', 3);
 	}
 
@@ -68,10 +68,10 @@ class IncludeController extends ActionController {
 	 * @return void
 	 */
 	public function initializeAction() {
-		$this->errors = Array();
-		$this->debugInformation = Array(
+		$this->errors = [];
+		$this->debugInformation = [
 			'settings' => $this->settings
-		);
+		];
 	}
 
 
@@ -106,15 +106,15 @@ class IncludeController extends ActionController {
 		$XML = new \DOMDocument();
 
 		// Configure connection.
-		$curlOptions = Array(
+		$curlOptions = [
 			CURLOPT_RETURNTRANSFER => TRUE,
 			CURLOPT_HEADER => TRUE
-		);
+		];
 
 		// Deal with Form submission:
 		// Detect forms by the formMethod parameter and use its value to submit the form.
 		// The form’s fields are expected to be in the formParamters variable.
-		$additionalURLParameters = Array();
+		$additionalURLParameters = [];
 		$arguments = $this->request->getArguments();
 		$this->debugInformation['arguments'] = $arguments;
 		if (array_key_exists('formParameters', $arguments)) {
@@ -128,7 +128,7 @@ class IncludeController extends ActionController {
 		}
 
 		// Forward whitelisted cookies of the request to the server.
-		$cookieParts = Array();
+		$cookieParts = [];
 		foreach ($_COOKIE as $cookieName => $cookieContent) {
 			if ($this->settings['cookiePassthrough'] && in_array($cookieName, $this->settings['cookiePassthrough'])) {
 				$cookieParts[] = urlencode($cookieName) . '=' . urlencode($cookieContent);
@@ -276,7 +276,7 @@ class IncludeController extends ActionController {
 	 * @param Array $additionalURLParameters [defaults to []]
 	 * @return string
 	 */
-	protected function remoteURL($additionalURLParameters = Array()) {
+	protected function remoteURL($additionalURLParameters = []) {
 		$remoteURL = '';
 
 		$arguments = $this->request->getArguments();
@@ -414,7 +414,7 @@ class IncludeController extends ActionController {
 	 * @return Array
 	 */
 	protected function flattenedArray($array, $prefix = 'array') {
-		$list = Array();
+		$list = [];
 		foreach ($array as $key => $value) {
 			if (is_array($value)) {
 				$list += $this->flattenedArray($value, $prefix . '-' . $key);
@@ -440,7 +440,7 @@ class IncludeController extends ActionController {
 	 * @return Array
 	 */
 	protected function cookiesFromHeader($headerString) {
-		$cookies = Array();
+		$cookies = [];
 
 		$headerLines = explode("\r\n", $headerString);
 		foreach ($headerLines as $headerLine) {
@@ -454,7 +454,7 @@ class IncludeController extends ActionController {
 					if (count($cookieMainParts) === 2) {
 						$cookieName = $cookieMainParts[0];
 						$cookieValue = $cookieMainParts[1];
-						$cookies[$cookieName] = Array('value' => $cookieValue);
+						$cookies[$cookieName] = ['value' => $cookieValue];
 						if (count($cookieParts) > 1) {
 							$cookieOptions = array_slice($cookieParts, 1);
 							foreach ($cookieOptions as $cookieOption) {

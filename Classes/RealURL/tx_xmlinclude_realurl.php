@@ -53,7 +53,7 @@ class tx_xmlinclude_realurl extends \tx_realurl_advanced {
 			$result = $params['value'];
 			if (count($params['pathParts']) > 0) {
 				$result .= '/' . implode('/', $params['pathParts']);
-				$params['pathParts'] = Array();
+				$params['pathParts'] = [];
 			}
 		}
 
