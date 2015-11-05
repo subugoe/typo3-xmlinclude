@@ -29,21 +29,23 @@ namespace Subugoe\Xmlinclude\Utility;
 /**
  * Utility for XML manipulations
  */
-class XmlUtility {
+class XmlUtility
+{
 
-	/**
-	 * Static XML parsing function to be used from XSL to parse strings as XML and process them
-	 *
-	 * @param string \XMLString
-	 * @return \DOMDocument|Boolean
-	 */
-	static function parseXML($string) {
-		$XML = new \DOMDocument();
-		// Strip leading whitespace which may get in the way of parsing.
-		$strippedString = preg_replace('/^\s*/', '', $string);
-		$XML->loadXML($strippedString);
+    /**
+     * Static XML parsing function to be used from XSL to parse strings as XML and process them
+     *
+     * @param string \XMLString
+     * @return \DOMDocument|Boolean
+     */
+    static function parseXML($string)
+    {
+        $XML = new \DOMDocument();
+        // Strip leading whitespace which may get in the way of parsing.
+        $strippedString = preg_replace('/^\s*/', '', $string);
+        $XML->loadXML($strippedString);
 
-		return $XML;
-	}
+        return $XML;
+    }
 
 }

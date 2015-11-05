@@ -25,19 +25,19 @@
  ******************************************************************************/
 
 
-if (!defined('TYPO3_MODE')) die ('Access denied.');
+if (!defined('TYPO3_MODE')) {
+    die ('Access denied.');
+}
 
 // Configure Plug-Ins
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-		'Subugoe.' . $_EXTKEY,
-		'xmlinclude',
-		[
-				'Include' => 'index'
-        ],
-		[
-				'Include' => 'index'
-        ]
+    'Subugoe.' . $_EXTKEY,
+    'xmlinclude',
+    [
+        'Include' => 'index'
+    ],
+    [
+        'Include' => 'index'
+    ]
 );
-
-?>

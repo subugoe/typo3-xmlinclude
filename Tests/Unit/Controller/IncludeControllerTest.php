@@ -6,7 +6,7 @@ namespace Subugoe\Xmlinclude\Tests\Unit\Controller;
  *
  *  (c) 2014 Ingo Pfennigstorf <pfennigstorf@sub-goettingen.de>
  *      Goettingen State Library
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,6 +30,7 @@ use TYPO3\CMS\Core\Tests\BaseTestCase;
 /**
  * Unit tests for xmlinclude controller
  */
-class IncludeControllerTest extends BaseTestCase{
+class IncludeControllerTest extends BaseTestCase
+{
 
-} 
+}
