@@ -215,73 +215,10 @@ further lines
 
 to enable the same rewriting for page IDs 3, 73, ….
 
-Version History
----------------
-
-2.0.1 (2013-07-30):
-	* fix bug in loading file:/// URLs
-2.0.0 (2013-03-08):
-	* support parsing JSON (convert it to XML)
-	* output as HTML instead of XML
-	* allow usage without loading external data, driven just by XSL
-	* **replace the »parseAsHTML« TypoScript setting by »parser«**: this may break existing configurations
-	* **re-name XSL parameters: prefix arguments with »argument-« and settings with »setting-«**: this may break existing stylesheets
-	* pass full file system path to site as parameter
-	* provide XML parsing as an XSL function
-	* use Fluid for showing debug messages
-	* add icon
-	* convert documentation to ReST
-	* add fake StarOffice manual file
-1.2.0 (2012-11-21):
-	* allow longer URLs in FlexForm
-	* fix problem with erroneously inserted slashes in URL rewriting
-1.1.0 (2012-09-24):
-	* make cookie path configurable
-	* improve RealURL support
-	* fewer superfluous slashes after rewrite-urls.xsl
-	* do not depend on the fed extension
-1.0.0 (2012-05-02):
-	* improve RealURL support
-	* fix configuration
-	* improve URLs
-	* call it 1.0
-0.9.3 (2012-03-12):
-	* improve URL rewriting
-	* include set up for RealURL
-0.9.2 (2012-03-08):
-	* add cookie handling
-	* add form handling for GET	and POST
-	* work around encoding issues for HTML content
-0.9.1 (2012-03-07):
-	* iron out problems with HTML vs XML parsing
-0.9.0 (2012-03-01):
-	* initial beta
-
 License
 -------
 
-MIT License to keep the people happy who need it.
-
-Copyright (C) 2012-2013 by Sven-S. Porst
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+GPL-2.0 - See LICENSE.md for details
 
 License for Array2XML.php class
 -------------------------------
