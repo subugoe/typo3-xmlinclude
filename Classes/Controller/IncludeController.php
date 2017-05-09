@@ -1,4 +1,5 @@
 <?php
+
 namespace Subugoe\Xmlinclude\Controller;
 
 /*******************************************************************************
@@ -27,11 +28,9 @@ namespace Subugoe\Xmlinclude\Controller;
  ******************************************************************************/
 
 use Subugoe\Xmlinclude\Utility\Array2XML;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
-
 
 /**
  * XMLInclude controller for the XMLInclude extension.
@@ -39,9 +38,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
  */
 class IncludeController extends ActionController
 {
-
     /**
      * Instance variable providing an array for error strings.
+     *
      * @var array
      */
     protected $errors;
@@ -53,35 +52,29 @@ class IncludeController extends ActionController
     protected function addError($message, $fileInfo = null)
     {
         $this->errors[] = ['message' => $message, 'fileInfo' => $fileInfo];
-        GeneralUtility::devLog('Error: ' . $message . '(' . $fileInfo . ')', 'xmlinclude', 3);
+        GeneralUtility::devLog('Error: '.$message.'('.$fileInfo.')', 'xmlinclude', 3);
     }
-
 
     /**
      * Array for debug information.
+     *
      * @var array
      */
     protected $debugInformation;
 
-
     /**
-     * Initialiser
-     *
-     * @return void
+     * Initializer.
      */
     public function initializeAction()
     {
         $this->errors = [];
         $this->debugInformation = [
-            'settings' => $this->settings
+            'settings' => $this->settings,
         ];
     }
 
-
     /**
-     * Index
-     *
-     * @return void
+     * Index.
      */
     public function indexAction()
     {
@@ -98,22 +91,20 @@ class IncludeController extends ActionController
         $this->view->assign('debugInformation', $this->debugInformation);
     }
 
-
     /**
      * Loads and transforms XML according to settings.
      * Returns the resulting XML document.
      *
      * @return \DOMDocument
      */
-    protected function XML()
+    protected function XML(): \DOMDocument
     {
-
         $XML = new \DOMDocument();
 
         // Configure connection.
         $curlOptions = [
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => true
+            CURLOPT_HEADER => true,
         ];
 
         // Deal with Form submission:
@@ -136,7 +127,7 @@ class IncludeController extends ActionController
         $cookieParts = [];
         foreach ($_COOKIE as $cookieName => $cookieContent) {
             if ($this->settings['cookiePassthrough'] && in_array($cookieName, $this->settings['cookiePassthrough'])) {
-                $cookieParts[] = urlencode($cookieName) . '=' . urlencode($cookieContent);
+                $cookieParts[] = urlencode($cookieName).'='.urlencode($cookieContent);
             }
         }
         $curlOptions[CURLOPT_COOKIE] = implode('; ', $cookieParts);
@@ -170,13 +161,12 @@ class IncludeController extends ActionController
                             if ($cookiePath[0] !== '/' && $sitePath[strlen($sitePath) - 1] !== '/') {
                                 $pathSeparator = '/';
                             }
-                            $cookiePath = $sitePath . $pathSeparator . $cookiePath;
+                            $cookiePath = $sitePath.$pathSeparator.$cookiePath;
                         }
                     }
 
                     // Read cookies from download.
                     $cookies = $this->cookiesFromHeader($downloadParts[0]);
-
 
                     // Pass the relevant cookies on to the user.
                     foreach ($cookies as $cookieName => $cookieContent) {
@@ -202,24 +192,24 @@ class IncludeController extends ActionController
         return $XML;
     }
 
-
     /**
      * Attempts to transfor the passed $string to a XML DOMDocument.
      * Depending on our configuration, allow try parsing the string as XML
      * (straightforward XML parsing), HTML (dogy XML parsing) or JSON (JSON
      * parsing plus conversion to a XML document).
      *
-     * @param String $string
+     * @param string $string
+     *
      * @return \DOMDocument
      */
-    protected function stringToXML($string)
+    protected function stringToXML($string): \DOMDocument
     {
         $XML = new \DOMDocument();
         $parseSuccess = false;
         if ($this->settings['parser'] === 'html') {
             // Assume we have UTF-8 encoding and escape based on that assumption.
             // (To work around the poor handling of encodings in DOMDocument.)
-            $string = mb_convert_encoding($string, 'HTML-ENTITIES', "UTF-8");
+            $string = mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
             $string = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $string);
             libxml_use_internal_errors(true);
             $parseSuccess = $XML->loadHTML($string);
@@ -248,44 +238,43 @@ class IncludeController extends ActionController
         return $XML;
     }
 
-
     /**
      * Converts the passed JSON string to a XML DOMDocument.
      *
-     * @param String $JSONString
+     * @param string       $JSONString
      * @param \DOMDocument $XML
-     * @return boolean
+     *
+     * @return bool
      */
-    protected function JSONStringToXML($JSONString, &$XML)
+    protected function JSONStringToXML(string $JSONString, \DOMDocument &$XML): bool
     {
         $parseSuccess = false;
         $JSONArray = json_decode($JSONString, true);
         if ($JSONArray) {
-            require_once(ExtensionManagementUtility::extPath('xmlinclude') . 'Classes/Utility/Array2XML.php');
             $JSONXML = Array2XML::createXML('fromJSON', $JSONArray);
             if ($JSONXML) {
                 $XML = $JSONXML;
                 $parseSuccess = true;
             }
         } else {
-            $this->addError('Failed to parse JSON (Error ' . json_last_error() . ').');
+            $this->addError('Failed to parse JSON (Error '.json_last_error().').');
         }
 
         return $parseSuccess;
     }
-
 
     /**
      * Builds the remote URL to load the XML from. Uses:
      * * the baseURL set in the FlexForm
      * * the URL argument
      * * the parameters TypoScript variable
-     * * the parameters passed in $additionalURLParameters
+     * * the parameters passed in $additionalURLParameters.
      *
      * @param array $additionalURLParameters [defaults to []]
+     *
      * @return string
      */
-    protected function remoteURL($additionalURLParameters = [])
+    protected function remoteURL(array $additionalURLParameters = []): string
     {
         $remoteURL = '';
 
@@ -319,28 +308,28 @@ class IncludeController extends ActionController
             // Reassemble the URL with its new set of parameters.
             $newParameterString = http_build_query($URLParameters);
             if ($newParameterString) {
-                $remoteURL = $remoteURLComponents[0] . '?' . $newParameterString;
+                $remoteURL = $remoteURLComponents[0].'?'.$newParameterString;
             }
         }
 
         return $remoteURL;
     }
 
-
     /**
      * Loads XSL from the given path and applies it to the given passed XML.
      * Returns the transformed XML document.
      *
-     * @param string $XSLPath
      * @param \DOMDocument $XML
-     * @return \DOMDocument|Null transformed XML
+     * @param string       $XSLPath
+     *
+     * @return \DOMDocument|null transformed XML
      */
-    protected function transformXMLWithXSLAtPath($XML, $XSLPath)
+    protected function transformXMLWithXSLAtPath(\DOMDocument $XML, string $XSLPath)
     {
         // Let TYPO3 analyse  the path settings to resolve potential 'EXT:'.
         $processedPath = $GLOBALS['TSFE']->tmpl->getFileName($XSLPath);
         if ($processedPath) {
-            $XSLPath = PATH_site . $processedPath;
+            $XSLPath = PATH_site.$processedPath;
         }
 
         // Load XSL.
@@ -372,13 +361,12 @@ class IncludeController extends ActionController
         return $XML;
     }
 
-
     /**
      * Returns the array of parameters to pass to the XSL transformation.
      *
      * @return array parameters to pass to the XSL Transformation
      */
-    protected function XSLParametersForXSLPath($XSLPath)
+    protected function XSLParametersForXSLPath(string $XSLPath): array
     {
         // Settings from TypoScript.
         $parameters = $this->flattenedArray($this->settings, 'setting');
@@ -411,48 +399,49 @@ class IncludeController extends ActionController
         // These can be helpful for loading other XSL files from XSL as the path handling in PHP’s is unclear.
         $parameters['sitePath'] = PATH_site;
         $parameters['currentXSLPath'] = $XSLPath;
-        $parameters['currentXSLFolder'] = pathinfo($XSLPath, PATHINFO_DIRNAME) . '/';
+        $parameters['currentXSLFolder'] = pathinfo($XSLPath, PATHINFO_DIRNAME).'/';
 
         $this->debugInformation['XSLParameters'] = $parameters;
+
         return $parameters;
     }
-
 
     /**
      * Returns a flattened Array of the passed arguments.
      *
-     * @param array $array
+     * @param array  $array
      * @param string $prefix
+     *
      * @return array
      */
-    protected function flattenedArray($array, $prefix = 'array')
+    protected function flattenedArray(array $array, string $prefix = 'array'): array
     {
         $list = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $list += $this->flattenedArray($value, $prefix . '-' . $key);
+                $list += $this->flattenedArray($value, $prefix.'-'.$key);
             } else {
-                $list[$prefix . '-' . $key] = $value;
+                $list[$prefix.'-'.$key] = $value;
             }
         }
 
         return $list;
     }
 
-
     /**
      * Takes the header of a http reply and returns an array containing
      * the cookies from the Set-Cookie lines in that header. Keys in that array
      * are the cookie names, the value is an array which has the cookie value
      * in the field 'value' and other cookie fields in fields named like
-     * the field name
+     * the field name.
      *
      * If multiple cookies with the same name are set, the last one is used.
      *
      * @param string $headerString
+     *
      * @return array
      */
-    protected function cookiesFromHeader($headerString)
+    protected function cookiesFromHeader(string $headerString): array
     {
         $cookies = [];
 
@@ -486,13 +475,12 @@ class IncludeController extends ActionController
         }
 
         $this->debugInformation['cookiesFromServer'] = $cookies;
+
         return $cookies;
     }
 
     /**
      * Helper: Inserts style and script tags into the page’s head.
-     *
-     * @return void
      */
     protected function addResourcesToHead()
     {
@@ -517,5 +505,4 @@ class IncludeController extends ActionController
             }
         }
     }
-
 }

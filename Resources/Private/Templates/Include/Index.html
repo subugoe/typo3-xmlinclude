@@ -1,15 +1,16 @@
 <f:if condition="{settings.showDebugInformation}">
-	<f:debug>{debugInformation}</f:debug>
+    <f:debug>{debugInformation}</f:debug>
 </f:if>
 
 <div class="xmlinclude">
-	<f:for each="{errors}" as="error">
-		<h4 class="error"><f:translate key="Error"></f:translate></h4>
-		<p class="error">
-			<f:translate key="{error.message}">{errorMessage}</f:translate>
-			<f:if condition="{error.fileInfo}"> »{error.fileInfo}«</f:if>
-		</p>
-	</f:for>
-
-	{xml->f:format.raw()}
+    <f:for each="{errors}" as="error">
+        <h4 class="error">
+            <f:translate key="Error"></f:translate>
+        </h4>
+        <p class="error">
+            <f:translate key="{error.message}">{errorMessage}</f:translate>
+            <f:if condition="{error.fileInfo}"> »{error.fileInfo}«</f:if>
+        </p>
+    </f:for>
+    {xml->f:format.raw()}
 </div>

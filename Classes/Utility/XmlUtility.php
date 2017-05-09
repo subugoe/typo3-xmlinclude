@@ -1,4 +1,5 @@
 <?php
+
 namespace Subugoe\Xmlinclude\Utility;
 
 /* * *************************************************************
@@ -27,18 +28,18 @@ namespace Subugoe\Xmlinclude\Utility;
  * ************************************************************* */
 
 /**
- * Utility for XML manipulations
+ * Utility for XML manipulations.
  */
 class XmlUtility
 {
-
     /**
-     * Static XML parsing function to be used from XSL to parse strings as XML and process them
+     * Static XML parsing function to be used from XSL to parse strings as XML and process them.
      *
      * @param string \XMLString
-     * @return \DOMDocument|Boolean
+     *
+     * @return \DOMDocument|bool
      */
-    static function parseXML($string)
+    public static function parseXML(string $string)
     {
         $XML = new \DOMDocument();
         // Strip leading whitespace which may get in the way of parsing.
@@ -47,5 +48,4 @@ class XmlUtility
 
         return $XML;
     }
-
 }

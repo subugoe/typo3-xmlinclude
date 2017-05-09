@@ -33,7 +33,8 @@ class tx_xmlinclude_realurl extends \tx_realurl_advanced
      *
      * @param    array - Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
      * @param    tx_realurl - Copy of parent object. Not used.
-     * @return    mixed - Depends on branching.
+     *
+     * @return mixed - Depends on branching
      */
     public function main(array $params, \tx_realurl $parent)
     {
@@ -54,13 +55,11 @@ class tx_xmlinclude_realurl extends \tx_realurl_advanced
             // Grab all remaining 'pathParts' to create the full path we want.
             $result = $params['value'];
             if (count($params['pathParts']) > 0) {
-                $result .= '/' . implode('/', $params['pathParts']);
+                $result .= '/'.implode('/', $params['pathParts']);
                 $params['pathParts'] = [];
             }
         }
 
         return $result;
     }
-
 }
-

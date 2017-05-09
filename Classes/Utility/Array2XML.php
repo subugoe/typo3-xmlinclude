@@ -1,4 +1,5 @@
 <?php
+
 namespace Subugoe\Xmlinclude\Utility;
 
 /**
@@ -34,7 +35,6 @@ namespace Subugoe\Xmlinclude\Utility;
  */
 class Array2XML
 {
-
     /**
      * @var \DOMDocument
      */
@@ -46,9 +46,11 @@ class Array2XML
     private static $encoding = 'UTF-8';
 
     /**
-     * Convert an Array to XML
+     * Convert an Array to XML.
+     *
      * @param string $node_name - name of the root node to be converted
-     * @param array $arr - aray to be converterd
+     * @param array  $arr       - aray to be converterd
+     *
      * @return \DomDocument
      */
     public static function &createXML($node_name, $arr = [])
@@ -70,11 +72,13 @@ class Array2XML
         if (empty(self::$xml)) {
             self::init();
         }
+
         return self::$xml;
     }
 
     /**
-     * Initialize the root XML node [optional]
+     * Initialize the root XML node [optional].
+     *
      * @param $version
      * @param $encoding
      * @param $format_output
@@ -87,15 +91,17 @@ class Array2XML
     }
 
     /**
-     * Convert an Array to XML
+     * Convert an Array to XML.
+     *
      * @param string $node_name - name of the root node to be converted
-     * @param array $arr - aray to be converterd
+     * @param array  $arr       - aray to be converterd
+     *
      * @return \DOMNode
+     *
      * @throws \Exception
      */
     private static function &convert($node_name, $arr = [])
     {
-
         //print_arr($node_name);
         $xml = self::getXMLRoot();
         $node = $xml->createElement($node_name);
@@ -105,7 +111,7 @@ class Array2XML
             if (isset($arr['@attributes'])) {
                 foreach ($arr['@attributes'] as $key => $value) {
                     if (!self::isValidTagName($key)) {
-                        throw new \Exception('[Array2XML] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
+                        throw new \Exception('[Array2XML] Illegal character in attribute name. attribute: '.$key.' in node: '.$node_name);
                     }
                     $node->setAttribute($key, self::bool2str($value));
                 }
@@ -134,7 +140,7 @@ class Array2XML
             // recurse to get the node for that key
             foreach ($arr as $key => $value) {
                 if (!self::isValidTagName($key)) {
-                    throw new \Exception('[Array2XML] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
+                    throw new \Exception('[Array2XML] Illegal character in tag name. tag: '.$key.' in node: '.$node_name);
                 }
                 if (is_array($value) && is_numeric(key($value))) {
                     // MORE THAN ONE NODE OF ITS KIND;
@@ -162,20 +168,24 @@ class Array2XML
 
     /**
      * Check if the tag name or attribute name contains illegal characters
-     * Ref: http://www.w3.org/TR/xml/#sec-common-syn
+     * Ref: http://www.w3.org/TR/xml/#sec-common-syn.
      *
      * @param string $tag
+     *
      * @return int
      */
     private static function isValidTagName($tag)
     {
         $pattern = '/^[a-z_]+[a-z0-9\:\-\.\_]*[^:]*$/i';
+
         return preg_match($pattern, $tag, $matches) && $matches[0] == $tag;
     }
 
     /**
-     * Get string representation of boolean value
-     * @param boolean $v
+     * Get string representation of boolean value.
+     *
+     * @param bool $v
+     *
      * @return string
      */
     private static function bool2str($v)
@@ -183,6 +193,7 @@ class Array2XML
         //convert boolean to text value.
         $v = $v === true ? 'true' : $v;
         $v = $v === false ? 'false' : $v;
+
         return $v;
     }
 }
