@@ -191,7 +191,7 @@ to enable the same rewriting for page IDs 3, 73, ….
 
 ## License
 
-GPL-2.0 - See LICENSE.md for details
+GPL-2.0 - See LICENSE for details
 
 ### License for Array2XML.php class
 
