@@ -1,5 +1,7 @@
 <?php
 
+namespace Subugoe\Xmlinclude\Url;
+
 /*******************************************************************************
  * Copyright notice
  *
@@ -24,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-class tx_xmlinclude_realurl extends \tx_realurl_advanced
+class RealUrlConfiguration
 {
     /**
      * RealURL splits the request’s path up in its components but we want to
@@ -32,11 +34,10 @@ class tx_xmlinclude_realurl extends \tx_realurl_advanced
      * As a consequence this userFunc should only be used as the _last_ one.
      *
      * @param    array - Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
-     * @param    tx_realurl - Copy of parent object. Not used.
      *
      * @return mixed - Depends on branching
      */
-    public function main(array $params, \tx_realurl $parent)
+    public function main(array $params)
     {
         $result = false;
 

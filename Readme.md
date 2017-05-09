@@ -174,7 +174,7 @@ entry of your RealURL configuration (e.g.
         'xmlinclude' => array (
             array(
                 'GETvar' => 'tx_xmlinclude_xmlinclude[URL]',
-                'userFunc' => 'EXT:xmlinclude/Classes/RealURL/tx_xmlinclude_realurl.php:&tx_xmlinclude_realurl->main'
+                'userFunc' => 'EXT:xmlinclude/Classes/Url/RealUrlConfiguration.php:&Subugoe\\Xmlinclude\\Url\\RealurlConfiguration->main'
             )
         ),
         '2' => 'xmlinclude',
