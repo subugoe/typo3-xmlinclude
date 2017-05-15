@@ -14,14 +14,14 @@ $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Include XML',
 	'description' => 'Loads, transforms and includes XML',
 	'category' => 'plugin',
-	'version' => '3.0.0',
+	'version' => '3.1.0',
 	'state' => 'stable',
 	'author' => 'Sven-S. Porst',
 	'author_email' => 'porst@sub.uni-goettingen.de',
 	'author_company' => 'Göttingen State and University Library, Germany http://www.sub.uni-goettingen.de',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.2.0-6.2.99',
+			'typo3' => '6.2.0-7.6.99',
 		),
 		'conflicts' => array(
 		),
