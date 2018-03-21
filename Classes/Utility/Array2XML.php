@@ -191,8 +191,8 @@ class Array2XML
     private static function bool2str($v)
     {
         //convert boolean to text value.
-        $v = $v === true ? 'true' : $v;
-        $v = $v === false ? 'false' : $v;
+        $v = true === $v ? 'true' : $v;
+        $v = false === $v ? 'false' : $v;
 
         return $v;
     }
