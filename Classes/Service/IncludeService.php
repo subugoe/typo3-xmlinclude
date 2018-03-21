@@ -157,6 +157,7 @@ final class IncludeService
                 try {
                     $XML = $this->stringToXML($contentString);
                 } catch (\Exception $e) {
+                    DebugUtility::addError($e->getMessage());
                 }
             } else {
                 DebugUtility::addError('Failed to load XML from', $remoteURL);
