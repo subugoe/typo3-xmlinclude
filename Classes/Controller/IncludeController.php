@@ -5,8 +5,7 @@ namespace Subugoe\Xmlinclude\Controller;
 /*******************************************************************************
  * Copyright notice
  *
- * Copyright (C) 2012-2013 by Sven-S. Porst, SUB Göttingen
- * <porst@sub.uni-goettingen.de>
+ * Copyright (C) SUB Göttingen
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -74,10 +73,10 @@ class IncludeController extends ActionController
     {
         $this->addResourcesToHead();
 
-        $XML = $this->includeService->XML();
-        if ($XML) {
-            $XML->formatOutput = true;
-            $this->view->assign('xml', $XML->saveHTML($XML->firstChild));
+        $xml = $this->includeService->XML();
+        if ($xml) {
+            $xml->formatOutput = true;
+            $this->view->assign('xml', $xml->saveHTML($xml->firstChild));
         }
 
         $this->view->assign('settings', $this->settings);

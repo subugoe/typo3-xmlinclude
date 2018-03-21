@@ -11,7 +11,7 @@ github](https://github.com/subugoe/xmlinclude).
 
 To run this extension you need:
 
--   TYPO3 ≥ 7.6.0
+-   TYPO3 ≥ 8.7.0
 -   PHP ≥ 7.0
 
 ## Description

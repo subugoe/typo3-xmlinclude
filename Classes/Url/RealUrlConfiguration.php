@@ -5,8 +5,7 @@ namespace Subugoe\Xmlinclude\Url;
 /*******************************************************************************
  * Copyright notice
  *
- * Copyright (C) 2012 by Sven-S. Porst, SUB Göttingen
- * <porst@sub.uni-goettingen.de>
+ * Copyright (C) SUB Göttingen
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +32,9 @@ class RealUrlConfiguration
      * process all of them (as we want to map paths on a different server onto ours).
      * As a consequence this userFunc should only be used as the _last_ one.
      *
-     * @param    array - Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
+     * @param array Parameters passed from parent object, "tx_realurl". Some values are passed by reference! (paramKeyValues, pathParts and pObj)
      *
-     * @return mixed - Depends on branching
+     * @return mixed Depends on branching
      */
     public function main(array $params)
     {

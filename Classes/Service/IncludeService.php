@@ -72,22 +72,18 @@ final class IncludeService
     {
         $XML = new \DOMDocument();
 
-        // Configure connection.
-        $curlOptions = [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => true,
-        ];
-
         // Deal with Form submission:
         // Detect forms by the formMethod parameter and use its value to submit the form.
         // The form’s fields are expected to be in the formParamters variable.
         $additionalURLParameters = [];
+        $method = 'get';
+        $methodArguments = [];
 
         DebugUtility::$data['arguments'] = $this->arguments;
         if (array_key_exists('formParameters', $this->arguments)) {
             if ('POST' === $this->arguments['formMethod']) {
-                $curlOptions[CURLOPT_POST] = true;
-                $curlOptions[CURLOPT_POSTFIELDS] = $this->arguments['formParameters'];
+                $method = 'post';
+                $methodArguments = $this->arguments['formParameters'];
             } else {
                 // For GET requests append the additional parameters to the request URL.
                 $additionalURLParameters = $this->arguments['formParameters'];
@@ -101,26 +97,15 @@ final class IncludeService
                 $cookieParts[] = urlencode($cookieName).'='.urlencode($cookieContent);
             }
         }
-        $curlOptions[CURLOPT_COOKIE] = implode('; ', $cookieParts);
-
-        // Run curl.
-        $curl = curl_init();
         $remoteURL = $this->remoteURL($additionalURLParameters);
 
         if ('' !== $remoteURL) {
-            $remoteContent = $this->client->get($remoteURL)->getBody()->getContents();
+            $remoteContent = $this->client->request($method, $remoteURL, $methodArguments);
 
-            $curlOptions[CURLOPT_URL] = $remoteURL;
             $isHTTPTransfer = (0 === strpos($remoteURL, 'http'));
-            DebugUtility::$data['curlOptions'] = $curlOptions;
-            curl_setopt_array($curl, $curlOptions);
-            $loadedString = $remoteContent;
-            $contentString = $loadedString;
 
-            if ($loadedString) {
+            if ($remoteContent) {
                 if ($isHTTPTransfer) {
-                    // We have a header: Deal with cookies.
-                    $downloadParts = explode("\r\n\r\n", $loadedString, 2);
                     $cookiePath = $this->settings['cookiePath'];
                     if ('.' === $cookiePath) {
                         // Get relative path to current page.
@@ -138,11 +123,8 @@ final class IncludeService
                         }
                     }
 
-                    // Read cookies from download.
-                    $cookies = $this->cookiesFromHeader($downloadParts[0]);
-
                     // Pass the relevant cookies on to the user.
-                    foreach ($cookies as $cookieName => $cookieContent) {
+                    foreach ($remoteContent->getHeader('Set-Cookies') as $cookieName => $cookieContent) {
                         // TODO: handle expiry etc?
                         if (in_array($cookieName, $this->settings['cookiePassthrough'])) {
                             setrawcookie($cookieName, $cookieContent['value'], 0, $cookiePath);
@@ -150,7 +132,7 @@ final class IncludeService
                     }
 
                     // Replace content string with the body.
-                    $contentString = $downloadParts[1];
+                    $contentString = $remoteContent->getBody()->getContents();
                 }
 
                 // Parse file.
@@ -160,7 +142,7 @@ final class IncludeService
                     DebugUtility::addError($e->getMessage());
                 }
             } else {
-                DebugUtility::addError('Failed to load XML from', $remoteURL);
+                DebugUtility::addError(sprintf('Failed to load XML from %s', $remoteURL));
             }
         } else {
             $XML = $this->stringToXML('<xmlinclude-root/>');
@@ -400,56 +382,5 @@ final class IncludeService
         }
 
         return $XML;
-    }
-
-    /**
-     * Takes the header of a http reply and returns an array containing
-     * the cookies from the Set-Cookie lines in that header. Keys in that array
-     * are the cookie names, the value is an array which has the cookie value
-     * in the field 'value' and other cookie fields in fields named like
-     * the field name.
-     *
-     * If multiple cookies with the same name are set, the last one is used.
-     *
-     * @param string $headerString
-     *
-     * @return array
-     */
-    private function cookiesFromHeader(string $headerString): array
-    {
-        $cookies = [];
-
-        $headerLines = explode("\r\n", $headerString);
-        foreach ($headerLines as $headerLine) {
-            $headerParts = explode(':', $headerLine, 2);
-            if (2 === count($headerParts)) {
-                $headerName = trim(strtolower($headerParts[0]));
-                $headerValue = trim($headerParts[1]);
-                if ('set-cookie' === $headerName) {
-                    $cookieParts = explode(';', $headerValue);
-                    $cookieMainParts = explode('=', $cookieParts[0]);
-                    if (2 === count($cookieMainParts)) {
-                        $cookieName = $cookieMainParts[0];
-                        $cookieValue = $cookieMainParts[1];
-                        $cookies[$cookieName] = ['value' => $cookieValue];
-                        if (count($cookieParts) > 1) {
-                            $cookieOptions = array_slice($cookieParts, 1);
-                            foreach ($cookieOptions as $cookieOption) {
-                                $cookieOptionParts = explode('=', $cookieOption, 2);
-                                if (2 === count($cookieOptionParts)) {
-                                    $cookieOptionName = trim($cookieOptionParts[0]);
-                                    $cookieOptionValue = trim($cookieOptionParts[1]);
-                                    $cookies[$cookieName][$cookieOptionName] = $cookieOptionValue;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        DebugUtility::$data['cookiesFromServer'] = $cookies;
-
-        return $cookies;
     }
 }
