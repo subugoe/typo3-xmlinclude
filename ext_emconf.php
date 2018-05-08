@@ -7,12 +7,12 @@ $EM_CONF[$_EXTKEY] = [
     'version' => '3.0.0',
     'state' => 'stable',
     'author' => 'Sven-S. Porst',
-    'author_email' => 'porst@sub.uni-goettingen.de',
+    'author_email' => 'info@sub.uni-goettingen.de',
     'author_company' => 'Göttingen State and University Library, Germany http://www.sub.uni-goettingen.de',
     'constraints' => [
         'depends' => [
-            'typo3' => '7.6.0-7.6.99',
-            'php' => '7.0.0-7.1.99',
+            'typo3' => '8.7.0-8.7.99',
+            'php' => '7.1.0-7.2.99',
         ],
         'conflicts' => [
         ],
